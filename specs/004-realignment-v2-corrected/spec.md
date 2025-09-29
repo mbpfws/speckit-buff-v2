@@ -210,4 +210,103 @@ As a developer who believes in the original vision of spec-kit, I want a fork th
 
 ---
 
-**Next Steps**: Run `/clarify` to identify any remaining ambiguities, then `/plan` to generate implementation artifacts with corrected system.
+## Clarifications
+
+### Session 1: 2025-09-30
+
+**Q1: Template Distribution Strategy**  
+**Answer**: Hybrid - Embedded fallback + optional GitHub downloads (most flexible)  
+**Rationale**: 
+- Templates embedded in package at `templates/` for offline reliability
+- GitHub Releases used for updates (`specify init --force` or new versions)
+- First `init` uses embedded templates immediately (<200ms target)
+- Optional: Check GitHub for newer versions, cache in `~/.specify/cache/`
+- Offline mode always works with embedded templates
+- **Implementation**: FR-007 clarified - copy from embedded `templates/`, optionally update from GitHub
+
+**Q2: Workflow Command Execution Model**  
+**Answer**: Agent-read only - Commands are markdown documentation for agents to interpret and execute  
+**Rationale**:
+- **FR-001 "exactly 2 commands"** means CLI Python code has ONLY `specify init` and `specify check`
+- Workflow files (`/specify`, `/plan`, `/tasks`, etc.) are **NOT CLI commands** - they are markdown instructions in `templates/commands/*.md`
+- AI agents read these markdown files and execute the bash/PowerShell scripts referenced within
+- Different AI platforms handle this differently:
+  - Some execute scripts via terminal/CLI natively
+  - Some read description and decide which stage to run commands
+  - Most can execute scripts when instructed in markdown
+- Scripts get appended to `.specify/scripts/` folder during init
+- This keeps CLI <400 LOC because workflow orchestration is in markdown, not Python
+- **Architecture**: CLI = Python code (init/check), Workflows = Agent-read markdown + bash/PS scripts
+- **Implementation**: No CLI subcommands for workflows, agents parse markdown and execute scripts directly
+
+**Q3: Script Types and Organization**  
+**Answer**: Interpretation B - Validation + Workflow Helper Scripts  
+**Rationale**:
+- `.specify/scripts/` contains BOTH validation scripts AND workflow helper scripts
+- **Validation Scripts (3)**: validate-structure, validate-naming, validate-frontmatter
+  - Called by `specify check` command
+  - Output: [INFO], [WARN], [ERROR] format
+  - Must have bash + PowerShell versions with identical output
+- **Workflow Helper Scripts (6+)**: Support agent workflow execution
+  - `check-prerequisites.sh` - Get FEATURE_DIR, FEATURE_SPEC, AVAILABLE_DOCS (used by /clarify, /tasks, /analyze)
+  - `setup-plan.sh` - Initialize planning artifacts (used by /plan)
+  - `create-new-feature.sh` - Create feature branch and spec file (used by /specify)
+  - `update-agent-context.sh` - Update agent-specific files (used by /plan Phase 1)
+  - Additional helpers as workflows require
+- **Total Scripts**: ~9 scripts × 2 platforms = ~18 files
+- **Testing**: All scripts must have cross-platform parity tests
+- **Implementation**: Phase 3.5 creates all scripts, not just validation ones
+
+**Q4: Workflow Helper Script JSON Output Format**  
+**Answer**: Standardized JSON contract with consistent fields across all helper scripts  
+**Rationale**:
+- All helper scripts with `--json` flag MUST output valid JSON to stdout
+- Field names MUST be consistent between bash and PowerShell versions
+- All paths MUST be absolute (no relative paths)
+- **check-prerequisites.sh JSON**: `REPO_ROOT`, `BRANCH`, `FEATURE_DIR`, `FEATURE_SPEC`, `IMPL_PLAN`, `TASKS`, `AVAILABLE_DOCS` (array)
+- **setup-plan.sh JSON**: `REPO_ROOT`, `BRANCH`, `FEATURE_SPEC`, `IMPL_PLAN`, `SPECS_DIR`
+- **create-new-feature.sh JSON**: `REPO_ROOT`, `BRANCH_NAME`, `SPEC_FILE`, `FEATURE_DIR`
+- Agents parse this JSON to get paths for workflow execution
+- **Critical**: Windows paths use forward slashes in JSON for cross-platform consistency
+- **Implementation**: Document JSON schema for each script, include in tests
+
+**Q5: Script Distribution and Creation Strategy**  
+**Answer**: Approach A - Embedded Scripts (same pattern as templates)  
+**Rationale**:
+- Scripts embedded in package at `scripts/bash/` and `scripts/powershell/`
+- During `specify init`: Copy `scripts/` → `.specify/scripts/` (same as template copying)
+- **Package structure**: `scripts/bash/*.sh` and `scripts/powershell/*.ps1` (18 files total)
+- Maintenance via GitHub repository (original spec-kit pattern)
+- Users can customize their `.specify/scripts/` after init
+- Keeps init.py simple (~20 LOC for script copying)
+- Aligns with Q1 hybrid template distribution strategy
+- **Implementation**: Add `scripts/` directory to package, update init.py to copy scripts like templates
+
+### Summary of Clarifications
+
+**Architecture Decisions Made**:
+1. **Template Distribution**: Hybrid approach - embedded in package with optional GitHub updates
+2. **Workflow Execution**: Agent-read markdown files (NOT CLI subcommands) - preserves <400 LOC limit
+3. **Script Organization**: Validation (3) + Workflow Helpers (6+) = ~18 files in `.specify/scripts/`
+4. **JSON Contract**: Standardized format for all helper scripts with absolute paths
+5. **Script Distribution**: Embedded in package `scripts/` directory, copied on init (same as templates)
+
+**Impact on Requirements**:
+- FR-001 clarified: CLI has ONLY `init` and `check` Python commands (workflows are markdown)
+- FR-036-041 expanded: Validation scripts are subset of total scripts
+- FR-007 clarified: Templates AND scripts copied from package on init
+- Package structure expanded: `templates/` AND `scripts/` directories
+
+**What Changed from Original Understanding**:
+- ❌ **Wrong (003)**: Workflows might be CLI subcommands → Would exceed 400 LOC
+- ✅ **Correct (004)**: Workflows are markdown files agents read and execute via scripts
+- ❌ **Wrong (003)**: Only 3 validation scripts needed
+- ✅ **Correct (004)**: Need ~9 scripts (3 validation + 6 helpers) for complete workflow support
+- ❌ **Wrong (003)**: Script JSON format undefined
+- ✅ **Correct (004)**: Standardized JSON contract documented
+
+**Confidence Level**: ✅ **HIGH** - All major architectural ambiguities resolved
+
+---
+
+**Status**: ✅ Clarification complete. Spec ready for `/plan` workflow.
