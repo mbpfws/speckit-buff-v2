@@ -1,14 +1,22 @@
 ---
 description: "Implementation plan template for feature development"
+version: "2.0.0"
 scripts:
-  sh: scripts/bash/update-agent-context.sh __AGENT__
-  ps: scripts/powershell/update-agent-context.ps1 -AgentType __AGENT__
+  sh: .specify/scripts/bash/update-agent-context.sh __AGENT__
+  ps: .specify/scripts/powershell/update-agent-context.ps1 -AgentType __AGENT__
 ---
 
 # Implementation Plan: [FEATURE]
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]  
+**Input**: Feature specification from `specs/[###-feature-name]/spec.md`
+
+<!-- 
+AGENT GUIDANCE (v2.0):
+This template is self-executing. Follow the Execution Flow step-by-step.
+Load constitution from .specify/memory/constitution.md before Phase 0.
+Generate artifacts in specs/[###-feature-name]/ directory.
+-->
 
 ## Execution Flow (/plan command scope)
 ```

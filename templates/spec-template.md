@@ -1,9 +1,23 @@
+---
+feature_id: "XXX"
+title: "Feature Name"
+status: "draft"
+created: "YYYY-MM-DD"
+version: "1.0"
+---
+
 # Feature Specification: [FEATURE NAME]
 
-**Feature Branch**: `[###-feature-name]`  
-**Created**: [DATE]  
-**Status**: Draft  
 **Input**: User description: "$ARGUMENTS"
+
+<!-- 
+AGENT GUIDANCE (v2.0):
+- This template is designed for AI agents using Spec-Kit v2.0
+- Focus on WHAT and WHY, not HOW (no tech stack or implementation details)
+- Mark ALL ambiguities with [NEEDS CLARIFICATION: specific question]
+- Remove sections that don't apply (don't leave empty or "N/A")
+- Ensure requirements are testable and unambiguous
+-->
 
 ## Execution Flow (main)
 ```

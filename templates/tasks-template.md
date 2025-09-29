@@ -1,7 +1,19 @@
+---
+description: "Task generation template for feature implementation"
+version: "2.0.0"
+---
+
 # Tasks: [FEATURE NAME]
 
-**Input**: Design documents from `/specs/[###-feature-name]/`
+**Input**: Design documents from `specs/[###-feature-name]/`  
 **Prerequisites**: plan.md (required), research.md, data-model.md, contracts/
+
+<!-- 
+AGENT GUIDANCE (v2.0):
+Generate ordered, dependency-aware tasks from design artifacts.
+Mark [P] for parallel execution (different files, no dependencies).
+Follow TDD: Tests before implementation.
+-->
 
 ## Execution Flow (main)
 ```
