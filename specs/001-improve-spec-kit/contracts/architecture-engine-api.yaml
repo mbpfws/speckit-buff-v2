@@ -1,0 +1,185 @@
+openapi: 3.0.3
+info:
+  title: Architecture Engine API
+  description: API for providing framework-specific architectural guidance and patterns
+  version: 1.0.0
+  contact:
+    name: Spec-Kit Enhancement Initiative
+    url: https://github.com/github/spec-kit
+
+servers:
+  - url: /api/v1
+    description: Architecture engine API
+
+paths:
+  /architecture/patterns:
+    post:
+      summary: Detect framework patterns and provide guidance
+      description: Analyzes project context and provides framework-specific architectural patterns and best practices
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatternDetectionRequest'
+      responses:
+        '200':
+          description: Pattern detection completed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PatternDetectionResponse'
+        '400':
+          description: Invalid request or missing project context
+        '500':
+          description: Pattern detection failed
+
+  /architecture/guidance:
+    post:
+      summary: Generate architectural guidance
+      description: Provides comprehensive architectural guidance including folder structures, code standards, and integration patterns
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArchitectureGuidanceRequest'
+      responses:
+        '200':
+          description: Guidance generation completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ArchitectureGuidanceResponse'
+
+components:
+  schemas:
+    PatternDetectionRequest:
+      type: object
+      required:
+        - project_analysis
+        - target_frameworks
+      properties:
+        project_analysis:
+          $ref: '#/components/schemas/ProjectAnalysisResponse'
+        target_frameworks:
+          type: array
+          items:
+            type: string
+          description: Specific frameworks to analyze
+        include_best_practices:
+          type: boolean
+          description: Whether to include best practices
+          default: true
+        include_anti_patterns:
+          type: boolean
+          description: Whether to include anti-pattern detection
+          default: true
+
+    PatternDetectionResponse:
+      type: object
+      properties:
+        detected_patterns:
+          type: object
+          properties:
+            framework_patterns:
+              type: array
+              items:
+                type: string
+            architectural_patterns:
+              type: array
+              items:
+                type: string
+            integration_patterns:
+              type: array
+              items:
+                type: string
+        best_practices:
+          type: object
+          description: Framework-specific best practices
+        anti_patterns:
+          type: array
+          items:
+            type: string
+          description: Detected architectural anti-patterns
+        recommendations:
+          type: array
+          items:
+            type: string
+          description: Recommended architectural improvements
+
+    ArchitectureGuidanceRequest:
+      type: object
+      required:
+        - pattern_detection
+        - project_type
+      properties:
+        pattern_detection:
+          $ref: '#/components/schemas/PatternDetectionResponse'
+        project_type:
+          type: string
+          enum: [greenfield, brownfield, ongoing, prototype]
+        include_folder_structures:
+          type: boolean
+          description: Whether to include folder structure recommendations
+          default: true
+        include_code_standards:
+          type: boolean
+          description: Whether to include code standards
+          default: true
+        include_performance_guidelines:
+          type: boolean
+          description: Whether to include performance guidelines
+          default: true
+
+    ArchitectureGuidanceResponse:
+      type: object
+      properties:
+        folder_structures:
+          type: array
+          items:
+            type: string
+          description: Recommended directory organization patterns
+        code_standards:
+          type: object
+          properties:
+            naming_conventions:
+              type: object
+            formatting_rules:
+              type: object
+            documentation_standards:
+              type: object
+        integration_patterns:
+          type: array
+          items:
+            type: string
+          description: Cross-component integration approaches
+        performance_guidelines:
+          type: array
+          items:
+            type: string
+          description: Framework-specific performance recommendations
+        implementation_roadmap:
+          type: array
+          items:
+            type: object
+            properties:
+              phase:
+                type: string
+              tasks:
+                type: array
+                items:
+                  type: string
+
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+          description: Error message
+        code:
+          type: string
+          description: Error code
+        details:
+          type: object
+          description: Additional error details

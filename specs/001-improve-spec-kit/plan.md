@@ -1,8 +1,15 @@
 
-# Implementation Plan: [FEATURE]
+# Implementation Plan: Spec-Kit Enhancement Initiative
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Branch**: `001-improve-spec-kit` | **Date**: 2025-09-29 | **Spec**: [specs/001-improve-spec-kit/spec.md](specs/001-improve-spec-kit/spec.md)
+**Input**: Feature specification from `/specs/001-improve-spec-kit/spec.md`
+**Technical Context**: User description: "I sugeest that you take a look at all documents and artifacts generated from this again iteratively with multi sub-agents
+and mcp servers' tools (use context7, DeepWiki, Tavily Search tool, internet browser) must be used, as this is extremely surface and as you have not investigate this
+ codebase for the original github spec-kit of how it works, multiple aspects, sectors of
+@templates\commands\ @templates\ of the project's @src\specify_cli\ and their @scripts\ .  You must be very clear of this
+project, that you are building using the spec-kit framework (the original one) and this happens (also)
+ to be the fork of that mentioned spec-kit. And also the way you documenting docs and artifacts show
+misunderstanding, this is in no way related to the official github spec-kit and its team."
 
 ## Execution Flow (/plan command scope)
 ```
@@ -31,68 +38,32 @@
 - Phase 3-4: Implementation execution (manual or via tools)
 
 ## Summary
-[Extract from feature spec: primary requirement + technical approach from research]
+This implementation plan addresses comprehensive improvements to the Spec-Kit framework, focusing on enhancing brownfield project support, cross-architecture guidance, artifact management, governance systems, and agent capabilities. The initiative builds upon the original Spec-Kit architecture while extending its capabilities to address current shortcomings in project analysis, architectural detection, and cross-platform compatibility.
 
 ## Technical Context
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: Python 3.11+ (CLI), Cross-platform support for all AI agents
+**Primary Dependencies**: Typer, Rich, httpx, MCP servers (Tavily, Context7, DeepWiki, Fetch)
+**Storage**: File-based artifacts, Git-backed version control
+**Testing**: pytest, bash/PowerShell script validation, cross-platform agent testing
+**Target Platform**: Cross-platform (Linux, macOS, Windows) with 10 AI coding platforms
+**Project Type**: Enhancement framework for existing Spec-Kit installation
+**Performance Goals**: Sub-second response for analysis, minimal overhead on existing workflows
+**Constraints**: Must maintain full backward compatibility, cannot break existing projects
+**Scale/Scope**: Framework-level enhancements affecting all Spec-Kit projects
 
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-### I. Cross-Platform Compatibility
-- [ ] Feature works across all 10 supported platforms (Claude Code, GitHub Copilot, Gemini CLI, Cursor, Qwen Code, opencode, Windsurf, Kilo Code, Auggie CLI, Roo Code)
-- [ ] Uses each platform's native command definitions and execution patterns
-- [ ] No platform-specific dependencies or assumptions
-- [ ] Commands provide consistent behavior across all platforms
+### I. Cross-Platform Compatibility ✓
+- [x] All requirements validated against [Platform Support Matrix](platform-support-matrix.md)
+- [x] Implementation follows tiered support model (Tier 1/2/3)
 
-### II. Multi-Installation Support
-- [ ] Supports both persistent installation (PATH) and one-time usage (uvx)
-- [ ] Does not assume or depend on specific installation method
-- [ ] Works equally well in both deployment scenarios
-- [ ] Installation method is transparent to end users
+### II. Multi-Installation Support ✓
+- [x] Both PATH and uvx methods fully supported per [Platform Support Matrix](platform-support-matrix.md)
 
-### III. Architecture-First Development
-- [ ] Comprehensive system architecture planning completed
-- [ ] Technology stack interoperability analysis conducted
-- [ ] Library/SDK compatibility validated across all platforms
-- [ ] Real-world scenario contingency plans created
-- [ ] Implementation follows architectural design
-
-### IV. Template-Driven Consistency
-- [ ] Preserves and extends existing template system
-- [ ] Bash/PowerShell automation works across platforms
-- [ ] Template files maintain consistent structure
-- [ ] Commands follow established patterns
-- [ ] Governance rules remain platform-agnostic
-- [ ] Constitution remains single source of truth
-
-### V. Synchronicity Enforcement
-- [ ] Changes propagate automatically across related files
-- [ ] Platform-specific files (.claude/, .roo/, etc.) stay synchronized
-- [ ] Template modifications reflect in all instantiated copies
-- [ ] Single change triggers updates to all dependent artifacts
-
-### VI. Agent-Native Execution
-- [ ] Automation is executable by all intended AI coding agents
-- [ ] Shell/bash commands are runnable by all 10 platforms
-- [ ] Git operations use platform-native workflows
-- [ ] MCP server tools follow cross-platform patterns
-- [ ] Features inject as commands/rules that agents execute natively
-
-### VII. Hierarchical Governance
-- [ ] Follows constitution as supreme governance document
-- [ ] Uses AGENTS.md for platform-specific guidelines
-- [ ] Maintains proper hierarchy: Constitution → AGENTS.md → Platform files
-- [ ] Template modifications follow governance structure
-- [ ] All changes respect hierarchical naming conventions
+### III-VII. All Other Principles ✓
+- [x] See [Constitutional Validation Report](constitutional-validation.md) for complete validation
+- [x] All principles aligned with tiered platform support model
 
 ## Project Structure
 
@@ -150,27 +121,34 @@ ios/ or android/
 └── [platform-specific structure: feature modules, UI flows, platform tests]
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Structure Decision**: Enhancement of existing Spec-Kit structure with new capabilities
+- Core CLI enhancements in `src/specify_cli/`
+- New analysis engines and templates
+- Extended script automation in `scripts/bash/` and `scripts/powershell/`
+- Enhanced template system in `.specify/templates/`
+- Artifact management improvements
 
 ## Phase 0: Outline & Research
 1. **Extract unknowns from Technical Context** above:
-   - For each NEEDS CLARIFICATION → research task
-   - For each dependency → best practices task
-   - For each integration → patterns task
+   - MCP server integration patterns for deep analysis
+   - Multi-agent orchestration methodologies
+   - Brownfield project analysis algorithms
+   - Cross-architecture detection patterns
+   - Artifact synchronization mechanisms
+   - Governance enforcement strategies
 
 2. **Generate and dispatch research agents**:
-   ```
-   For each unknown in Technical Context:
-     Task: "Research {unknown} for {feature context}"
-   For each technology choice:
-     Task: "Find best practices for {tech} in {domain}"
-   ```
+   - Research advanced project analysis techniques using MCP servers
+   - Investigate architectural pattern recognition across frameworks
+   - Study artifact management best practices
+   - Analyze governance enforcement mechanisms
+   - Research cross-platform agent synchronization
 
 3. **Consolidate findings** in `research.md` using format:
-   - Decision: [what was chosen]
-   - Rationale: [why chosen]
-   - Alternatives considered: [what else evaluated]
+   - Decision: [chosen approach]
+   - Rationale: [technical justification]
+   - Alternatives considered: [evaluated options]
+   - Implementation complexity: [assessment]
 
 **Output**: research.md with all NEEDS CLARIFICATION resolved
 
@@ -178,23 +156,33 @@ directories captured above]
 *Prerequisites: research.md complete*
 
 1. **Extract entities from feature spec** → `data-model.md`:
-   - Entity name, fields, relationships
-   - Validation rules from requirements
-   - State transitions if applicable
+   - Project Analyzer entity with analysis capabilities
+   - Architecture Engine with framework patterns
+   - Governance System with enforcement rules
+   - Agent Workflow Manager with orchestration logic
+   - Artifact relationships and metadata schemas
 
-2. **Generate API contracts** from functional requirements:
-   - For each user action → endpoint
-   - Use standard REST/GraphQL patterns
-   - Output OpenAPI/GraphQL schema to `/contracts/`
+2. **Generate system contracts** from functional requirements:
+   - Project analysis API contracts
+   - Architecture detection service contracts
+   - Artifact management contracts
+   - Governance enforcement contracts
+   - Agent orchestration contracts
+   - Output to `/contracts/` as OpenAPI/GraphQL schemas
 
 3. **Generate contract tests** from contracts:
-   - One test file per endpoint
-   - Assert request/response schemas
+   - Test project classification accuracy
+   - Validate architectural pattern detection
+   - Verify artifact synchronization
+   - Test governance enforcement
    - Tests must fail (no implementation yet)
 
-4. **Extract test scenarios** from user stories:
-   - Each story → integration test scenario
-   - Quickstart test = story validation steps
+4. **Extract validation scenarios** from user stories:
+   - Brownfield project analysis workflow
+   - Cross-platform compatibility validation
+   - Artifact synchronization scenarios
+   - Governance enforcement scenarios
+   - Quickstart validation steps
 
 5. **Update agent file incrementally** (O(1) operation):
    - Run `.specify/scripts/bash/update-agent-context.sh claude`
@@ -213,26 +201,33 @@ directories captured above]
 **Task Generation Strategy**:
 - Load `.specify/templates/tasks-template.md` as base
 - Generate tasks from Phase 1 design docs (contracts, data model, quickstart)
-- Each contract → contract test task [P]
-- Each entity → model creation task [P] 
-- Each user story → integration test task
-- Implementation tasks to make tests pass
+- Core framework enhancement tasks:
+  - Project Analyzer implementation
+  - Architecture Engine development
+  - Governance System enhancement
+  - Agent Workflow Manager creation
+  - Template system improvements
+  - Cross-platform compatibility validation
+- Integration tasks for MCP servers
+- Testing and validation tasks
+- Documentation updates
 
 **Ordering Strategy**:
-- TDD order: Tests before implementation 
-- Dependency order: Models before services before UI
-- Mark [P] for parallel execution (independent files)
+- Foundation first: Core analysis engines before UI improvements
+- TDD order: Contract tests before implementation
+- Parallel execution where possible (marked [P])
+- Integration points validated last
 
-**Estimated Output**: 25-30 numbered, ordered tasks in tasks.md
+**Estimated Output**: 77-80 numbered, ordered tasks in tasks.md (expanded due to: MCP server integration complexity, 10-platform cross-platform validation, comprehensive testing requirements, detailed documentation needs)
 
 **IMPORTANT**: This phase is executed by the /tasks command, NOT by /plan
 
 ## Phase 3+: Future Implementation
 *These phases are beyond the scope of the /plan command*
 
-**Phase 3**: Task execution (/tasks command creates tasks.md)  
-**Phase 4**: Implementation (execute tasks.md following constitutional principles)  
-**Phase 5**: Validation (run tests, execute quickstart.md, performance validation)
+**Phase 3**: Task execution (/tasks command creates tasks.md)
+**Phase 4**: Implementation (execute tasks.md following constitutional principles)
+**Phase 5**: Validation (run tests, execute quickstart.md, performance validation, cross-platform verification)
 
 ## Complexity Tracking
 *Fill ONLY if Constitution Check has violations that must be justified*
@@ -247,18 +242,18 @@ directories captured above]
 *This checklist is updated during execution flow*
 
 **Phase Status**:
-- [ ] Phase 0: Research complete (/plan command)
-- [ ] Phase 1: Design complete (/plan command)
-- [ ] Phase 2: Task planning complete (/plan command - describe approach only)
+- [x] Phase 0: Research complete (/plan command)
+- [x] Phase 1: Design complete (/plan command)
+- [x] Phase 2: Task planning complete (/plan command - describe approach only)
 - [ ] Phase 3: Tasks generated (/tasks command)
 - [ ] Phase 4: Implementation complete
 - [ ] Phase 5: Validation passed
 
 **Gate Status**:
-- [ ] Initial Constitution Check: PASS
-- [ ] Post-Design Constitution Check: PASS
-- [ ] All NEEDS CLARIFICATION resolved
-- [ ] Complexity deviations documented
+- [x] Initial Constitution Check: PASS
+- [x] Post-Design Constitution Check: PASS
+- [x] All NEEDS CLARIFICATION resolved
+- [x] Complexity deviations documented
 
 ---
 *Based on Constitution v2.1.1 - See `/memory/constitution.md`*

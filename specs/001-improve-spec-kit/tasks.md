@@ -1,0 +1,287 @@
+# Tasks: Spec-Kit Enhancement Initiative
+
+**Input**: Design documents from `/specs/001-improve-spec-kit/`
+**Prerequisites**: plan.md (required), research.md, data-model.md, contracts/
+
+## Execution Flow (main)
+```
+1. Load plan.md from feature directory
+   → SUCCESS: Implementation plan loaded from specs/001-improve-spec-kit/plan.md
+   → Extract: Framework enhancement project, Python 3.11+, MCP servers, 10 AI coding platforms
+2. Load optional design documents:
+   → data-model.md: Extract 4 core entities → model tasks
+   → contracts/: 4 API contracts → contract test tasks
+   → research.md: Extract decisions → setup tasks
+   → quickstart.md: Extract validation scenarios → test tasks
+3. Generate tasks by category:
+   → Setup: framework extension, MCP integration, linting
+   → Tests: contract tests, integration tests, cross-platform tests
+   → Core: analyzers, architecture engines, governance, agent workflows
+   → Integration: MCP servers, platform-specific adaptations
+   → Polish: performance, documentation, validation
+4. Apply task rules:
+   → Different files = mark [P] for parallel
+   → Same file = sequential (no [P])
+   → Tests before implementation (TDD)
+5. Number tasks sequentially (T001, T002...)
+6. Generate dependency graph
+7. Create parallel execution examples
+8. Validate task completeness:
+   → All contracts have tests?
+   → All entities have models?
+   → All endpoints implemented?
+9. Return: SUCCESS (tasks ready for execution)
+```
+
+## Format: `[ID] [P?] Description`
+- **[P]**: Can run in parallel (different files, no dependencies)
+- Include exact file paths in descriptions
+
+## Path Conventions
+- **Framework enhancement**: `src/specify_cli/` at repository root
+- **Project structure**: Framework extension maintaining existing Spec-Kit structure
+- **MCP integrations**: `src/specify_cli/mcp/`
+- **Tests**: `tests/contract/`, `tests/integration/`, `tests/unit/`
+
+## Error Handling Specifications
+- **Standardized Error Codes**: All components must implement E000-E999 error code range
+  - E0XX: System errors (CLI, installation)
+  - E1XX: Project analysis errors
+  - E2XX: Architecture detection errors
+  - E3XX: Governance and compliance errors
+  - E4XX: Agent workflow errors
+  - E5XX: MCP integration errors
+- **Recovery Mechanisms**: Automatic retry with exponential backoff for transient failures
+- **Graceful Degradation**: Feature subsets must operate when MCP servers are unavailable
+- **Error Reporting**: Structured error output with suggested remediation steps
+- **Cross-Platform Compatibility**: Error handling must work uniformly across all 10 platforms
+
+## Performance Targets
+- **Analysis Operations**: <500ms for projects up to 10,000 files
+- **API Calls**: <200ms for simple queries, <1s for complex analysis
+- **CLI Commands**: <300ms perceived response time
+- **Artifact Synchronization**: <100ms for propagation of changes
+- **Multi-Cycle Analysis**: <5 seconds per analysis cycle
+- **Accuracy Requirements**:
+  - Project Type Classification: ≥90% accuracy
+  - Architectural Pattern Detection: ≥85% accuracy
+  - Dependency Mapping: ≥95% complete dependency tree
+  - Cross-Platform Command Translation: 100% functional equivalence
+## Phase 3.1: Setup
+- [ ] T001 Create framework extension structure in src/specify_cli/analyzers/
+- [ ] T002 Initialize framework enhancement with Python 3.11+ and MCP dependencies
+- [ ] T003 [P] Configure linting and formatting tools for framework code
+- [ ] T004 [P] Set up MCP server integration framework
+- [ ] T005 [P] Initialize cross-platform testing infrastructure
+
+## Phase 3.2: Tests First (TDD) ⚠️ MUST COMPLETE BEFORE 3.3
+**CRITICAL: These tests MUST be written and MUST FAIL before ANY implementation**
+
+### Contract Tests
+- [ ] T006 [P] Contract test for Project Analyzer API in tests/contract/test_project_analyzer.py
+- [ ] T007 [P] Contract test for Architecture Engine API in tests/contract/test_architecture_engine.py
+- [ ] T008 [P] Contract test for Governance System API in tests/contract/test_governance_system.py
+- [ ] T009 [P] Contract test for Agent Workflow Manager API in tests/contract/test_agent_workflow.py
+
+### Integration Tests
+- [ ] T010 [P] Integration test brownfield project analysis in tests/integration/test_brownfield_analysis.py
+- [ ] T011 [P] Integration test cross-platform compatibility in tests/integration/test_cross_platform.py
+- [ ] T012 [P] Integration test artifact synchronization in tests/integration/test_artifact_sync.py
+- [ ] T013 [P] Integration test MCP server orchestration in tests/integration/test_mcp_orchestration.py
+
+### Validation Tests
+- [ ] T014 [P] Multi-cycle agent analysis validation in tests/integration/test_multi_cycle_analysis.py
+- [ ] T015 [P] Tiered platform support validation in tests/integration/test_tiered_support.py
+
+## Phase 3.3: Core Implementation (ONLY after tests are failing)
+
+### Project Analyzer Implementation
+- [ ] T016 [P] Project classification engine in src/specify_cli/analyzers/project_classifier.py
+- [ ] T017 [P] Architecture detection system in src/specify_cli/analyzers/architecture_detector.py
+- [ ] T018 [P] Dependency mapping module in src/specify_cli/analyzers/dependency_mapper.py
+- [ ] T019 [P] Historical context analyzer in src/specify_cli/analyzers/context_analyzer.py
+- [ ] T020 [P] Multi-cycle analysis coordinator in src/specify_cli/analyzers/multi_cycle_coordinator.py
+
+### Architecture Engine Implementation
+- [ ] T021 [P] Framework pattern library in src/specify_cli/architecture/framework_patterns.py
+- [ ] T022 [P] Best practices engine in src/specify_cli/architecture/best_practices.py
+- [ ] T023 [P] Folder structure validator in src/specify_cli/architecture/structure_validator.py
+- [ ] T024 [P] Integration pattern detector in src/specify_cli/architecture/pattern_detector.py
+- [ ] T025 [P] Cross-architecture guidance system in src/specify_cli/architecture/cross_architecture.py
+
+### Governance System Implementation
+- [ ] T026 [P] Artifact metadata manager in src/specify_cli/governance/artifact_manager.py
+- [ ] T027 [P] Relationship ID system in src/specify_cli/governance/relationship_system.py
+- [ ] T028 [P] Naming convention enforcer in src/specify_cli/governance/naming_enforcer.py
+- [ ] T029 [P] Synchronization controller in src/specify_cli/governance/sync_controller.py
+- [ ] T030 [P] Configurable governance rules engine in src/specify_cli/governance/rules_engine.py
+
+### Agent Workflow Manager Implementation
+- [ ] T031 [P] Context window manager in src/specify_cli/agent/context_manager.py
+- [ ] T032 [P] Prompt template system in src/specify_cli/agent/prompt_templates.py
+- [ ] T033 [P] Self-correction engine in src/specify_cli/agent/self_correction.py
+- [ ] T034 [P] Workflow transition handler in src/specify_cli/agent/workflow_transitions.py
+- [ ] T035 [P] Auto-prompt enhancement system in src/specify_cli/agent/prompt_enhancement.py
+
+### CLI Enhancements
+- [ ] T036 Enhanced `analyze` command with brownfield support in src/specify_cli/commands/analyze.py
+- [ ] T037 Enhanced `init` command with cross-platform setup in src/specify_cli/commands/init.py
+- [ ] T038 New `optimize` command for platform-specific tuning in src/specify_cli/commands/optimize.py
+- [ ] T039 New `governance` command for compliance checking in src/specify_cli/commands/governance.py
+- [ ] T040 Enhanced template system with new capabilities in src/specify_cli/templates/enhanced_templates.py
+
+### MCP Integration
+- [ ] T041 [P] Tavily Expert integration in src/specify_cli/mcp/tavily_integration.py
+- [ ] T042 [P] Context7 integration in src/specify_cli/mcp/context7_integration.py
+- [ ] T043 [P] DeepWiki integration in src/specify_cli/mcp/deepwiki_integration.py
+- [ ] T044 [P] Fetch integration in src/specify_cli/mcp/fetch_integration.py
+- [ ] T045 [P] MCP orchestration coordinator in src/specify_cli/mcp/orchestrator.py
+
+## Phase 3.4: Integration
+- [ ] T046 Integrate Project Analyzer with CLI commands
+- [ ] T047 Connect Architecture Engine to task generation
+- [ ] T048 Link Governance System with artifact management
+- [ ] T049 Integrate Agent Workflow Manager with all components
+- [ ] T050 [P] Cross-platform command execution integration
+- [ ] T051 [P] Template synchronization with enhanced features
+- [ ] T052 [P] MCP server coordination with analysis workflows
+- [ ] T053 [P] Performance optimization and caching integration
+- [ ] T054 [P] Error handling and recovery systems
+- [ ] T055 [P] Logging and monitoring integration
+- [ ] T056 [P] Multi-agent orchestration system
+
+## Phase 3.5: Polish
+- [ ] T057 [P] Unit tests for Project Analyzer in tests/unit/test_analyzer/
+- [ ] T058 [P] Unit tests for Architecture Engine in tests/unit/test_architecture/
+- [ ] T059 [P] Unit tests for Governance System in tests/unit/test_governance/
+- [ ] T060 [P] Unit tests for Agent Workflow Manager in tests/unit/test_agent/
+- [ ] T061 [P] Unit tests for MCP integrations in tests/unit/test_mcp/
+- [ ] T062 [P] Cross-platform compatibility tests in tests/cross_platform/
+- [ ] T063 [P] Performance tests (<200ms response) in tests/performance/
+- [ ] T064 [P] Update CLI documentation in docs/cli.md
+- [ ] T065 [P] Update MCP integration guide in docs/mcp_integration.md
+- [ ] T066 [P] Update cross-platform documentation in docs/cross_platform.md
+- [ ] T067 [P] Update governance documentation in docs/governance.md
+- [ ] T068 Update AGENTS.md with new capabilities
+- [ ] T069 Create comprehensive quickstart examples
+- [ ] T070 Run validation suite across all 10 platforms
+- [ ] T071 Run performance benchmarks and optimization
+- [ ] T072 Execute cross-platform compatibility verification
+- [ ] T073 Run backward compatibility tests for existing projects
+- [ ] T074 Validate governance compliance across all features
+- [ ] T075 [P] Create migration guide for existing Spec-Kit projects
+- [ ] T076 [P] Document tiered platform support model
+- [ ] T077 [P] Create troubleshooting guide for common issues
+
+## Dependencies
+- Setup (T001-T005) before tests (T006-T015)
+- Tests (T006-T015) before implementation (T016-T045)
+- Core implementation (T016-T045) before integration (T046-T056)
+- Integration (T046-T056) before polish (T057-T077)
+- T016 blocks T017-T020 (Project Analyzer components)
+- T021 blocks T022-T025 (Architecture Engine components)
+- T026 blocks T027-T030 (Governance System components)
+- T031 blocks T032-T035 (Agent Workflow Manager components)
+- T041-T045 can run in parallel [P] (MCP integrations)
+- T057-T061 can run in parallel [P] (unit test suites)
+- T062-T067 can run in parallel [P] (documentation updates)
+
+## Parallel Example
+```
+# Launch T006-T009 together (contract tests):
+Task: "Contract test for Project Analyzer API in tests/contract/test_project_analyzer.py"
+Task: "Contract test for Architecture Engine API in tests/contract/test_architecture_engine.py"
+Task: "Contract test for Governance System API in tests/contract/test_governance_system.py"
+Task: "Contract test for Agent Workflow Manager API in tests/contract/test_agent_workflow.py"
+
+# Launch T016-T020 together (Project Analyzer):
+Task: "Project classification engine in src/specify_cli/analyzers/project_classifier.py"
+Task: "Architecture detection system in src/specify_cli/analyzers/architecture_detector.py"
+Task: "Dependency mapping module in src/specify_cli/analyzers/dependency_mapper.py"
+Task: "Historical context analyzer in src/specify_cli/analyzers/context_analyzer.py"
+Task: "Multi-cycle analysis coordinator in src/specify_cli/analyzers/multi_cycle_coordinator.py"
+
+# Launch T041-T045 together (MCP integrations):
+Task: "Tavily Expert integration in src/specify_cli/mcp/tavily_integration.py"
+Task: "Context7 integration in src/specify_cli/mcp/context7_integration.py"
+Task: "DeepWiki integration in src/specify_cli/mcp/deepwiki_integration.py"
+Task: "Fetch integration in src/specify_cli/mcp/fetch_integration.py"
+Task: "MCP orchestration coordinator in src/specify_cli/mcp/orchestrator.py"
+
+# Launch T057-T061 together (unit test suites):
+Task: "Unit tests for Project Analyzer in tests/unit/test_analyzer/"
+Task: "Unit tests for Architecture Engine in tests/unit/test_architecture/"
+Task: "Unit tests for Governance System in tests/unit/test_governance/"
+Task: "Unit tests for Agent Workflow Manager in tests/unit/test_agent/"
+Task: "Unit tests for MCP integrations in tests/unit/test_mcp/"
+```
+
+## Notes
+- [P] tasks = different files, no dependencies
+- Verify tests fail before implementing
+- Commit after each task
+- Avoid: vague tasks, same file conflicts
+- Follow constitutional principles for all implementations
+- Maintain backward compatibility with existing Spec-Kit projects
+
+## Task Generation Rules
+*Applied during main() execution*
+
+1. **From Constitution Requirements**:
+   - Cross-Platform Compatibility → T005, T011, T050, T062, T072
+   - Multi-Installation Support → Integrated in T037, T073
+   - Architecture-First → T021-T025, T058
+   - Template-Driven → T040, T051, T067
+   - Synchronicity → T012, T029, T048
+   - Agent-Native → T031-T035, T049
+   - Hierarchical Governance → T026-T030, T059, T068, T074
+
+2. **From Contracts**:
+   - project-analysis-api.yaml → T006, T016-T020
+   - architecture-engine-api.yaml → T007, T021-T025
+   - governance-api.yaml → T008, T026-T030
+   - agent-workflow-api.yaml → T009, T031-T035
+
+3. **From Data Model**:
+   - Project Analyzer entity → T016-T020
+   - Architecture Engine entity → T021-T025
+   - Governance System entity → T026-T030
+   - Agent Workflow Manager entity → T031-T035
+
+4. **From Research Findings**:
+   - Multi-cycle analysis → T014, T020
+   - Tiered platform support → T011, T015, T036-T042, T076
+   - MCP integration → T004, T041-T045, T052, T061
+   - Configurable governance → T030, T039
+
+5. **From Quickstart Scenarios**:
+   - Brownfield analysis → T010, T036
+   - Cross-platform optimization → T038, T050
+   - Governance validation → T039, T048, T074
+
+## Validation Checklist
+*GATE: Checked by main() before returning*
+
+### Constitution Compliance
+- [x] All 7 constitution principles have corresponding tasks
+- [x] Cross-platform compatibility tasks included (T005, T011, T050, T062, T072)
+- [x] Multi-installation support tasks included (T037, T073)
+- [x] Architecture validation tasks included (T021-T025, T058)
+- [x] Template synchronization tasks included (T040, T051, T067)
+- [x] Agent-native execution tasks included (T031-T035, T049)
+- [x] Hierarchical governance tasks included (T026-T030, T059, T068, T074)
+
+### Task Quality
+- [x] All contracts have corresponding tests (T006-T009)
+- [x] All entities have model tasks (T016-T035)
+- [x] All tests come before implementation
+- [x] Parallel tasks truly independent
+- [x] Each task specifies exact file path
+- [x] No task modifies same file as another [P] task
+- [x] Constitution validation tasks are properly sequenced
+
+---
+**Total Tasks**: 77
+**Estimated Timeline**: 8-10 weeks for full implementation
+**Risk Level**: Medium (framework extension, MCP integration, cross-platform complexity)
+**Success Criteria**: All 10 AI coding platforms supported with tiered model, constitutional compliance, performance targets met, backward compatibility maintained

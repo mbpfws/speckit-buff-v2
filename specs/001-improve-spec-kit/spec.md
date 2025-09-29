@@ -124,57 +124,57 @@ As a development team using Spec-Kit across multiple AI coding platforms, I need
 ### Functional Requirements
 
 #### Brownfield Project Support
-- **FR-001**: System MUST analyze existing project intent and architectural clarity before generating specifications
-- **FR-002**: System MUST detect historical development context and adapt workflows accordingly
-- **FR-003**: System MUST provide coordination mechanisms for cross-domain and vertical feature development
-- **FR-004**: System MUST support migration of artifacts and ensure documentation continuity
-- **FR-005**: System MUST classify projects by type (greenfield, brownfield, ongoing, prototype) to guide agent decisions
+- **FR-001**: System MUST analyze existing project intent and architectural clarity before generating specifications with ≥90% classification accuracy for projects up to 10,000 files within 500ms
+- **FR-002**: System MUST detect historical development context (commit patterns, file ages, dependency versions) and adapt workflows with ≥85% accuracy
+- **FR-003**: System MUST provide coordination mechanisms for cross-domain and vertical feature development supporting ≥5 concurrent domains
+- **FR-004**: System MUST support migration of artifacts with 100% documentation continuity and automated relationship mapping
+- **FR-005**: System MUST classify projects by type (greenfield, brownfield, ongoing, prototype) using ≥3 signals per category to guide agent decisions
 
 #### Architecture and Design Guidance
-- **FR-006**: System MUST provide framework-specific architectural patterns (e.g., NextJS App Router hierarchy best practices)
-- **FR-007**: System MUST enforce domain-driven folder and file organization conventions
-- **FR-008**: System MUST promote modular, class-based, and granular code structuring patterns
-- **FR-009**: System MUST reinforce established design patterns with actionable examples
-- **FR-010**: System MUST guide technology stack selection and integration patterns
+- **FR-006**: System MUST provide framework-specific architectural patterns (e.g., NextJS App Router hierarchy best practices) for ≥5 major frameworks with concrete examples
+- **FR-007**: System MUST enforce domain-driven folder and file organization conventions with ≤5% deviation rate
+- **FR-008**: System MUST promote modular, class-based, and granular code structuring patterns with specific size limits (≤500 lines per module, ≤50 lines per method)
+- **FR-009**: System MUST reinforce established design patterns with ≥3 actionable examples per pattern
+- **FR-010**: System MUST guide technology stack selection and integration patterns with compatibility matrices for ≥50 common library combinations
 
 #### Artifact and Task Management
-- **FR-011**: System MUST maintain synchronization between tasks.md and actual codebase state
-- **FR-012**: System MUST prevent erroneous file removal or duplication due to misalignment
-- **FR-013**: System MUST track file/directory changes and update related artifacts automatically
-- **FR-014**: System MUST provide clear, actionable task hierarchies with meta/ID tracking
-- **FR-015**: System MUST integrate task artifacts with document relationships
+- **FR-011**: System MUST maintain synchronization between tasks.md and actual codebase state with ≤100ms propagation delay
+- **FR-012**: System MUST prevent erroneous file removal or duplication due to misalignment with 100% accuracy
+- **FR-013**: System MUST track file/directory changes and update related artifacts automatically with ≥95% coverage
+- **FR-014**: System MUST provide clear, actionable task hierarchies with meta/ID tracking supporting ≥1000 tasks per project
+- **FR-015**: System MUST integrate task artifacts with document relationships through bidirectional referencing
 
 #### Governance and Compliance
-- **FR-016**: System MUST enforce naming conventions consistently across code and directories
-- **FR-017**: System MUST synchronize AGENTS.md as a governance artifact effectively
-- **FR-018**: System MUST manage controlled documents with proper hierarchical organization
-- **FR-019**: System MUST implement relational IDs and metadata for artifact relationships
-- **FR-020**: System MUST provide context anchoring for efficient agent retrieval
-- **FR-021**: System MUST support project-level governance without mandating specific compliance frameworks
+- **FR-016**: System MUST enforce naming conventions consistently across code and directories with ≥98% compliance rate
+- **FR-017**: System MUST synchronize AGENTS.md as a governance artifact effectively across all 10 platforms with ≤1s delay
+- **FR-018**: System MUST manage controlled documents with proper hierarchical organization supporting ≥10 document types
+- **FR-019**: System MUST implement relational IDs (REL-{type}-{source}-{target}-{relationship}) and metadata for artifact relationships
+- **FR-020**: System MUST provide context anchoring for efficient agent retrieval with ≤50ms search time
+- **FR-021**: System MUST support project-level governance without mandating specific compliance frameworks, allowing custom rule sets
 
 #### Agent Capabilities and Workflow
-- **FR-022**: System MUST support agent self-correction and validation of user input
-- **FR-023**: System MUST provide context window management for hierarchical sections
-- **FR-024**: System MUST include auto-prompt enhancement and context condensation features
-- **FR-025**: System MUST support automated command insertion and workflow transitioning
-- **FR-026**: System MUST adapt to novice developer behaviors with appropriate guidance
+- **FR-022**: System MUST support agent self-correction and validation of user input with ≥80% error detection rate
+- **FR-023**: System MUST provide context window management for hierarchical sections with ≤10% overhead
+- **FR-024**: System MUST include auto-prompt enhancement and context condensation features reducing input size by ≥30%
+- **FR-025**: System MUST support automated command insertion and workflow transitioning with ≥95% success rate
+- **FR-026**: System MUST adapt to novice developer behaviors with appropriate guidance using ≥3 behavioral signals
 
 #### Cross-Platform and Integration
-- **FR-027**: System MUST accommodate continuity across different AI coding platforms
-- **FR-028**: System MUST handle breaking changes and version updates effectively
-- **FR-029**: System MUST provide boilerplate/template utilization guidance
-- **FR-030**: System MUST leverage in-code comments and tags for navigation
-- **FR-031**: System MUST support cross-domain knowledge synthesis
-- **FR-032**: System MUST operate on single-user projects with AI agent teams managed through git workflows
+- **FR-027**: System MUST accommodate continuity across all 10 AI coding platforms with 100% feature parity
+- **FR-028**: System MUST handle breaking changes and version updates effectively with ≤24h adaptation time
+- **FR-029**: System MUST provide boilerplate/template utilization guidance for ≥20 common project types
+- **FR-030**: System MUST leverage in-code comments and tags for navigation with ≥90% tag recognition rate
+- **FR-031**: System MUST support cross-domain knowledge synthesis from ≥5 different domains
+- **FR-032**: System MUST operate on single-user projects with AI agent teams managed through git workflows supporting ≥10 branches
 
 #### Quality and Validation
-- **FR-033**: System MUST provide early issue detection beyond superficial validation
-- **FR-034**: System MUST balance overengineering vs underengineering tendencies
-- **FR-035**: System MUST prioritize realistic end-to-end test cases over excessive TDD
-- **FR-036**: System MUST provide robust branch iteration and validation cycles
-- **FR-037**: System MUST validate feature usability throughout development lifecycle
-- **FR-038**: System MUST maintain full backward compatibility with existing Spec-Kit projects and artifacts
-- **FR-039**: System MUST operate as a trust-based system assuming users manage their own data security for proprietary code
+- **FR-033**: System MUST provide early issue detection beyond superficial validation with ≥85% defect detection rate
+- **FR-034**: System MUST balance overengineering vs underengineering tendencies using complexity metrics (cyclomatic complexity ≤10, cognitive load ≤7)
+- **FR-035**: System MUST prioritize realistic end-to-end test cases over excessive TDD with ≥80% critical path coverage
+- **FR-036**: System MUST provide robust branch iteration and validation cycles with ≤5min validation time
+- **FR-037**: System MUST validate feature usability throughout development lifecycle with ≥5 validation points
+- **FR-038**: System MUST maintain full backward compatibility with existing Spec-Kit projects and artifacts with 100% compatibility
+- **FR-039**: System MUST operate as a trust-based system assuming users manage their own data security for proprietary code with zero data transmission to external services
 
 ### Key Entities
 
