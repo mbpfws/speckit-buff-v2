@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(git checkout:*)",
+      "Bash(.specify/scripts/bash/setup-plan.sh:*)",
+      "mcp__tavily-expert__tavily_search_tool"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
