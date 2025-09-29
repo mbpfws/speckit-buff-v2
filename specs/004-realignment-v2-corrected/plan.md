@@ -296,6 +296,202 @@ Based on Technical Context unknowns and spec requirements, research needed for:
 
 ### Research Output Location
 
-All research findings will be consolidated in: `specs/004-realignment-v2-corrected/research.md`
+All research findings consolidated in: `specs/004-realignment-v2-corrected/research.md` ✅
 
-**Next**: Execute research using web search and MCP tools as needed...
+---
+
+## Phase 1: Design & Contracts
+
+*Prerequisites: research.md complete ✅*
+
+### Artifacts Generated ✅
+
+1. **data-model.md** ✅
+   - 4 entities: Template System, Script Library, Workflow Definition, Project Configuration
+   - All attributes, relationships, business rules documented
+   - JSON contracts for helper scripts
+   - State transitions and validation rules
+
+2. **contracts/** ✅
+   - `cli-init.yaml` - Init command API contract (migrated from 003)
+   - `cli-check.yaml` - Check command API contract (migrated from 003)
+   - `validation-api.yaml` - Script validation contract (migrated from 003)
+
+3. **quickstart.md** ✅
+   - 10 integration test scenarios (migrated from 003)
+   - Acceptance criteria for each scenario
+   - Cross-platform validation guidance
+
+4. **WINDSURF.md** ✅
+   - Agent instructions for this platform
+   - Workflow reference (/specify, /clarify, /plan, /tasks, /analyze, /implement)
+   - Script execution patterns
+   - Current implementation status
+   - Recent changes summary
+
+### Post-Design Constitution Re-check ✅
+
+**Status**: PASS - All 7 principles still satisfied after design phase
+
+**Changes from initial check**: None - design maintained all principles
+
+**Complexity Tracking**: No violations to document
+
+---
+
+## Phase 2: Task Planning Approach
+
+*This section describes what the /tasks command will do - DO NOT execute during /plan*
+
+### Task Generation Strategy
+
+**Input Documents**:
+- ✅ `plan.md` - Technical stack, architecture, structure decision
+- ✅ `research.md` - Technical decisions and patterns
+- ✅ `data-model.md` - 4 entities with relationships
+- ✅ `contracts/` - 3 API contracts (CLI commands + validation)
+- ✅ `quickstart.md` - 10 integration test scenarios
+
+**Task Generation Rules**:
+1. Load `.specify/templates/tasks-template.md` as base structure
+2. Generate tasks from design artifacts:
+   - **From contracts/**: Each contract → contract test task [P]
+   - **From data-model.md**: Each entity component → implementation task
+   - **From quickstart.md**: Each scenario → integration test task [P]
+   - **From research.md**: Each technical decision → setup/config task
+
+**Task Categories** (5 phases):
+1. **Phase 3.1: Setup** (5 tasks)
+   - Project structure per implementation plan ✅ (already done)
+   - pyproject.toml with dependencies ✅ (already done)
+   - Testing infrastructure ✅ (already done)
+   - Linting and formatting ✅ (already done)
+   - README and documentation ✅ (already done)
+
+2. **Phase 3.2: Tests First (TDD)** (~13 tasks)
+   - Contract tests for cli-init.yaml [P] ✅ (already done)
+   - Contract tests for cli-check.yaml [P] ✅ (already done)
+   - Contract tests for validation-api.yaml [P] ✅ (already done)
+   - Integration tests for 10 quickstart scenarios [P] ✅ (partially done)
+
+3. **Phase 3.3: Core Implementation** (5 tasks)
+   - template_loader.py ✅ (already done)
+   - validators.py ✅ (already done)
+   - cli.py ✅ (already done)
+   - init.py ✅ (already done)
+   - check.py ✅ (already done)
+
+4. **Phase 3.4: Template Creation** (6 tasks)
+   - spec-template.md ✅ (already done)
+   - plan-template.md ✅ (already done)
+   - tasks-template.md ✅ (already done)
+   - constitution.md ✅ (already done)
+   - brownfield-analysis.md ✅ (already done)
+   - architecture-patterns.md ✅ (already done)
+
+5. **Phase 3.5: Validation Scripts** (~18 tasks) **← NEXT PHASE**
+   - bash/validate-structure.sh [P]
+   - bash/validate-naming.sh [P]
+   - bash/validate-frontmatter.sh [P]
+   - bash/check-prerequisites.sh [P]
+   - bash/setup-plan.sh [P]
+   - bash/create-new-feature.sh [P]
+   - bash/update-agent-context.sh [P]
+   - powershell/*.ps1 equivalents (7 scripts) [P]
+   - Cross-platform parity tests for all scripts
+   - JSON output validation tests
+
+6. **Phase 3.6: Integration & Documentation** (7 tasks)
+   - pyproject.toml package data configuration
+   - init.py script copying implementation
+   - Integration tests for script execution
+   - Cross-platform CI/CD configuration
+   - Documentation updates
+   - Performance optimization
+   - Memory footprint validation
+
+7. **Phase 3.7: QA & Validation** (8 tasks)
+   - All contract tests passing
+   - All integration tests passing
+   - LOC count <400 validation
+   - Cross-platform testing
+   - Constitutional compliance check
+   - Performance benchmarks
+   - Security audit
+   - Release preparation
+
+**Ordering Strategy**:
+- **TDD order**: Tests before implementation (Phase 3.2 before 3.3)
+- **Dependency order**: Core before integration (3.3 before 3.6)
+- **Parallel execution**: Mark [P] for independent file tasks
+- **Sequential**: Tasks affecting same files must be sequential
+
+**Parallel Execution Patterns**:
+- All validation scripts can be created in parallel [P]
+- All PowerShell scripts can be created in parallel [P]
+- Integration tests for different scenarios can run in parallel [P]
+- Template creation tasks were parallelizable [P]
+
+**Estimated Output**: 
+- ~50 total tasks across 7 phases
+- ~29 already complete (Setup, Tests-partial, Core, Templates)
+- ~21 remaining (Scripts, Integration, QA)
+
+**Task Numbering**: 
+- Continue from T001-T029 (already complete)
+- New tasks start at T030
+
+**Dependencies**:
+- T030-T036 (bash scripts) must complete before T037-T043 (PowerShell equivalents) for reference
+- All scripts must complete before integration tests (Phase 3.6)
+- Integration must complete before QA (Phase 3.7)
+
+**IMPORTANT**: Phase 2 describes the approach only. The `/tasks` command will generate the actual `tasks.md` file.
+
+---
+
+## Progress Tracking
+
+**Phase Status**:
+- [x] Phase 0: Research complete ✅
+- [x] Phase 1: Design complete ✅
+- [x] Phase 2: Task planning approach described ✅
+- [ ] Phase 3: Tasks generated (/tasks command - NOT executed yet)
+- [ ] Phase 4: Implementation (use /implement command)
+- [ ] Phase 5: Validation (final QA)
+
+**Gate Status**:
+- [x] Initial Constitution Check: PASS ✅
+- [x] Post-Design Constitution Check: PASS ✅
+- [x] All technical unknowns resolved ✅
+- [x] No complexity deviations to document ✅
+
+**Artifacts Generated**:
+- [x] plan.md (this file) ✅
+- [x] research.md ✅
+- [x] data-model.md ✅
+- [x] contracts/ (3 files) ✅
+- [x] quickstart.md ✅
+- [x] WINDSURF.md ✅
+
+---
+
+## Execution Flow Status
+
+```
+1. Load feature spec ✅
+2. Fill Technical Context ✅
+3. Load Constitution ✅
+4. Evaluate Constitution Check ✅
+5. Execute Phase 0 → research.md ✅
+6. Execute Phase 1 → contracts, data-model, quickstart, WINDSURF ✅
+7. Re-evaluate Constitution Check ✅
+8. Plan Phase 2 → Task generation approach ✅
+9. STOP - Ready for /tasks command ✅
+```
+
+**Status**: ✅ `/plan` workflow COMPLETE
+
+---
+
+*Based on Constitution v2.1.1 - See `.specify/memory/constitution.md`*

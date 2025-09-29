@@ -1,10 +1,5 @@
 #!/usr/bin/env bash
 
-# Constitution: Agent-Native - executable by all AI agents
-# Constitution: Cross-Platform - works across all supported platforms
-# Constitution: Template-Driven - follows established feature creation patterns
-# Constitution: Hierarchical Governance - enforces proper branch and directory structure
-
 set -e
 
 JSON_MODE=false
@@ -24,7 +19,6 @@ if [ -z "$FEATURE_DESCRIPTION" ]; then
 fi
 
 # Function to find the repository root by searching for existing project markers
-# Constitution: Multi-Installation - works with both git and non-git repositories
 find_repo_root() {
     local dir="$1"
     while [ "$dir" != "/" ]; do
@@ -83,7 +77,6 @@ else
     >&2 echo "[specify] Warning: Git repository not detected; skipped branch creation for $BRANCH_NAME"
 fi
 
-# Constitution: Template-Driven - use standardized templates for consistency
 FEATURE_DIR="$SPECS_DIR/$BRANCH_NAME"
 mkdir -p "$FEATURE_DIR"
 
@@ -92,7 +85,6 @@ SPEC_FILE="$FEATURE_DIR/spec.md"
 if [ -f "$TEMPLATE" ]; then cp "$TEMPLATE" "$SPEC_FILE"; else touch "$SPEC_FILE"; fi
 
 # Set the SPECIFY_FEATURE environment variable for the current session
-# Constitution: Synchronicity - ensures context consistency across operations
 export SPECIFY_FEATURE="$BRANCH_NAME"
 
 if $JSON_MODE; then

@@ -1,11 +1,11 @@
 <div align="center">
     <img src="./media/logo_small.webp"/>
-    <h1>🌱 Spec Kit</h1>
-    <h3><em>Build high-quality software faster.</em></h3>
+    <h1>🌱 Spec Kit v2.0</h1>
+    <h3><em>Simple, Template-Driven Specifications for AI Agents</em></h3>
 </div>
 
 <p align="center">
-    <strong>An effort to allow organizations to focus on product scenarios rather than writing undifferentiated code with the help of Spec-Driven Development.</strong>
+    <strong>A minimalist framework that empowers AI agents with high-quality templates and validation scripts—no complex analysis engines required.</strong>
 </p>
 
 [![Release](https://github.com/github/spec-kit/actions/workflows/release.yml/badge.svg)](https://github.com/github/spec-kit/actions/workflows/release.yml)
@@ -14,104 +14,109 @@
 
 ## Table of Contents
 
-- [🤔 What is Spec-Driven Development?](#-what-is-spec-driven-development)
-- [⚡ Get started](#-get-started)
-- [📽️ Video Overview](#️-video-overview)
-- [🤖 Supported AI Agents](#-supported-ai-agents)
-- [🔧 Specify CLI Reference](#-specify-cli-reference)
-- [📚 Core philosophy](#-core-philosophy)
-- [🌟 Development phases](#-development-phases)
-- [🎯 Experimental goals](#-experimental-goals)
+- [🤔 What is Spec-Kit v2.0?](#-what-is-spec-kit-v20)
+- [✨ What's New in v2.0](#-whats-new-in-v20)
+- [⚡ Quick Start](#-quick-start)
+- [🤖 Supported AI Platforms](#-supported-ai-platforms)
+- [🔧 CLI Reference](#-cli-reference)
+- [📚 Core Philosophy](#-core-philosophy)
+- [🔍 Migration from v1.x](#-migration-from-v1x)
 - [🔧 Prerequisites](#-prerequisites)
-- [📖 Learn more](#-learn-more)
-- [📋 Detailed process](#-detailed-process)
 - [🔍 Troubleshooting](#-troubleshooting)
 - [👥 Maintainers](#-maintainers)
 - [💬 Support](#-support)
-- [🙏 Acknowledgements](#-acknowledgements)
 - [📄 License](#-license)
 
-## 🤔 What is Spec-Driven Development?
+## 🤔 What is Spec-Kit v2.0?
 
-Spec-Driven Development **flips the script** on traditional software development. For decades, code has been king — specifications were just scaffolding we built and discarded once the "real work" of coding began. Spec-Driven Development changes this: **specifications become executable**, directly generating working implementations rather than just guiding them.
+Spec-Kit v2.0 is a **back-to-basics** realignment of the specification framework, designed to be:
 
-## ⚡ Get started
+- **🎯 Simple**: CLI under 400 lines, only `init` and `check` commands
+- **📝 Template-Driven**: High-quality markdown templates with embedded agent guidance
+- **🤖 Agent-Native**: Leverages AI capabilities for analysis and research, not complex engines
+- **🌐 Cross-Platform**: Works on all 10 major AI coding platforms
+- **⚡ Lightweight**: Minimal dependencies (stdlib, requests, PyYAML, click)
 
-### 1. Install Specify
+## ✨ What's New in v2.0
 
-Choose your preferred installation method:
+### Simplified Architecture
+- **Removed**: Complex analysis engines, deep brownfield scanners, pattern detectors
+- **Added**: Agent-augmented templates with embedded research guidance
+- **Result**: <400 LOC CLI that does more with less
 
-#### Option 1: Persistent Installation (Recommended)
+### Template-First Approach
+- **Brownfield Analysis**: Multi-pass agent checklists instead of automated scanners
+- **Architecture Guidance**: Framework patterns with online research instructions
+- **Quality Checks**: Non-blocking validation scripts, not blocking linters
 
-Install once and use everywhere:
+### Enhanced Cross-Platform Support
+- **10 AI Platforms**: Claude Code, Roo Code, GitHub Copilot, Cursor, Gemini CLI, Qwen Code, opencode, Windsurf, Kilo Code, Auggie CLI
+- **2 Installation Methods**: Both `uv tool` (persistent) and `uvx` (one-time) supported
+- **Dual Scripts**: Bash (Unix/Linux/macOS) and PowerShell (Windows) validation scripts
 
+### Agent-Native Philosophy
+- Agents perform analysis using templates and internet research
+- Agents run validation scripts and report findings
+- Users make final decisions (non-blocking validation)
+
+## ⚡ Quick Start
+
+### 1. Install Specify CLI
+
+**Persistent Installation** (recommended):
 ```bash
-uv tool install specify-cli --from git+https://github.com/github/spec-kit.git
+uv tool install specify-cli
 ```
 
-Then use the tool directly:
+**One-time Usage**:
+```bash
+uvx specify-cli init
+```
+
+### 2. Initialize Your Project
 
 ```bash
-specify init <PROJECT_NAME>
+# Initialize with templates
+specify init
+
+# Execution time: <3 seconds
+```
+
+This creates:
+- `.specify/templates/` - Markdown templates with agent guidance
+- `.specify/scripts/` - Cross-platform validation scripts (bash + PowerShell)
+- `specs/` - Directory for your specifications
+- `.specify/config.yaml` - Configuration file
+
+### 3. Create Features Using AI Agents
+
+Your AI agent now has access to high-quality templates:
+
+```bash
+# Use agent commands (available in Claude Code, Windsurf, etc.)
+/constitution  # Establish project principles
+/specify       # Create feature specification
+/clarify       # Clarify underspecified areas
+/plan          # Generate technical implementation plan
+/tasks         # Break down into actionable tasks
+/analyze       # Verify consistency before implementation
+/implement     # Execute all tasks
+```
+
+### 4. Validate Your Work
+
+```bash
+# Run validation checks
 specify check
+
+# With quality tool integration
+specify check --quality
+
+# Check for template updates
+specify check --update-templates
 ```
 
-#### Option 2: One-time Usage
-
-Run directly without installing:
-
-```bash
-uvx --from git+https://github.com/github/spec-kit.git specify init <PROJECT_NAME>
-```
-
-**Benefits of persistent installation:**
-
-- Tool stays installed and available in PATH
-- No need to create shell aliases
-- Better tool management with `uv tool list`, `uv tool upgrade`, `uv tool uninstall`
-- Cleaner shell configuration
-
-### 2. Establish project principles
-
-Use the **`/constitution`** command to create your project's governing principles and development guidelines that will guide all subsequent development.
-
-```bash
-/constitution Create principles focused on code quality, testing standards, user experience consistency, and performance requirements
-```
-
-### 3. Create the spec
-
-Use the **`/specify`** command to describe what you want to build. Focus on the **what** and **why**, not the tech stack.
-
-```bash
-/specify Build an application that can help me organize my photos in separate photo albums. Albums are grouped by date and can be re-organized by dragging and dropping on the main page. Albums are never in other nested albums. Within each album, photos are previewed in a tile-like interface.
-```
-
-### 4. Create a technical implementation plan
-
-Use the **`/plan`** command to provide your tech stack and architecture choices.
-
-```bash
-/plan The application uses Vite with minimal number of libraries. Use vanilla HTML, CSS, and JavaScript as much as possible. Images are not uploaded anywhere and metadata is stored in a local SQLite database.
-```
-
-### 5. Break down into tasks
-
-Use **`/tasks`** to create an actionable task list from your implementation plan.
-
-```bash
-/tasks
-```
-
-### 6. Execute implementation
-
-Use **`/implement`** to execute all tasks and build your feature according to the plan.
-
-```bash
-/implement
-```
-
-For detailed step-by-step instructions, see our [comprehensive guide](./spec-driven.md).
+For complete workflows, see the [quickstart scenarios](./specs/003-based-on-the/quickstart.md).
 
 ## 📽️ Video Overview
 
@@ -119,87 +124,87 @@ Want to see Spec Kit in action? Watch our [video overview](https://www.youtube.c
 
 [![Spec Kit video header](/media/spec-kit-video-header.jpg)](https://www.youtube.com/watch?v=a9eR1xsfvHg&pp=0gcJCckJAYcqIYzv)
 
-## 🤖 Supported AI Agents
+## 🤖 Supported AI Platforms
 
-| Agent                                                     | Support | Notes                                             |
-|-----------------------------------------------------------|---------|---------------------------------------------------|
-| [Claude Code](https://www.anthropic.com/claude-code)      | ✅ |                                                   |
-| [GitHub Copilot](https://code.visualstudio.com/)          | ✅ |                                                   |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ |                                                   |
-| [Cursor](https://cursor.sh/)                              | ✅ |                                                   |
-| [Qwen Code](https://github.com/QwenLM/qwen-code)          | ✅ |                                                   |
-| [opencode](https://opencode.ai/)                          | ✅ |                                                   |
-| [Windsurf](https://windsurf.com/)                         | ✅ |                                                   |
-| [Kilo Code](https://github.com/Kilo-Org/kilocode)         | ✅ |                                                   |
-| [Auggie CLI](https://docs.augmentcode.com/cli/overview)   | ✅ |                                                   |
-| [Roo Code](https://roocode.com/)                          | ✅ |                                                   |
-| [Codex CLI](https://github.com/openai/codex)              | ⚠️ | Codex [does not support](https://github.com/openai/codex/issues/2890) custom arguments for slash commands.  |
+All 10 major AI coding platforms are supported with platform-specific templates:
 
-## 🔧 Specify CLI Reference
+| Platform | Tier | Integration | Notes |
+|----------|------|-------------|-------|
+| [Claude Code](https://www.anthropic.com/claude-code) | 1 | Full | MCP servers, hooks, automated workflows |
+| [Roo Code](https://roocode.com/) | 1 | Full | Native command execution |
+| [GitHub Copilot](https://code.visualstudio.com/) | 2 | Core | Manual setup required |
+| [Cursor](https://cursor.sh/) | 2 | Advanced | IDE integration, context awareness |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | 2 | Comprehensive | CLI interface |
+| [Qwen Code](https://github.com/QwenLM/qwen-code) | 3 | Basic | Command support |
+| [opencode](https://opencode.ai/) | 3 | Core | Framework functionality |
+| [Windsurf](https://windsurf.com/) | 3 | Development | Environment integration |
+| [Kilo Code](https://github.com/Kilo-Org/kilocode) | 3 | Lightweight | Basic support |
+| [Auggie CLI](https://docs.augmentcode.com/cli/overview) | 3 | Basic | Command execution |
 
-The `specify` command supports the following options:
+## 🔧 CLI Reference
 
 ### Commands
 
-| Command     | Description                                                    |
-|-------------|----------------------------------------------------------------|
-| `init`      | Initialize a new Specify project from the latest template      |
-| `check`     | Check for installed tools (`git`, `claude`, `gemini`, `code`/`code-insiders`, `cursor-agent`, `windsurf`, `qwen`, `opencode`, `codex`) |
+| Command | Description | Performance Target |
+|---------|-------------|-------------------|
+| `specify init` | Download templates and initialize project structure | <3 seconds |
+| `specify check` | Run validation scripts and quality checks | <1 second |
 
-### `specify init` Arguments & Options
+### `specify init` Options
 
-| Argument/Option        | Type     | Description                                                                  |
-|------------------------|----------|------------------------------------------------------------------------------|
-| `<project-name>`       | Argument | Name for your new project directory (optional if using `--here`, or use `.` for current directory) |
-| `--ai`                 | Option   | AI assistant to use: `claude`, `gemini`, `copilot`, `cursor`, `qwen`, `opencode`, `codex`, `windsurf`, `kilocode`, `auggie`, or `roo` |
-| `--script`             | Option   | Script variant to use: `sh` (bash/zsh) or `ps` (PowerShell)                 |
-| `--ignore-agent-tools` | Flag     | Skip checks for AI agent tools like Claude Code                             |
-| `--no-git`             | Flag     | Skip git repository initialization                                          |
-| `--here`               | Flag     | Initialize project in the current directory instead of creating a new one   |
-| `--force`              | Flag     | Force merge/overwrite when initializing in current directory (skip confirmation) |
-| `--skip-tls`           | Flag     | Skip SSL/TLS verification (not recommended)                                 |
-| `--debug`              | Flag     | Enable detailed debug output for troubleshooting                            |
-| `--github-token`       | Option   | GitHub token for API requests (or set GH_TOKEN/GITHUB_TOKEN env variable)  |
+| Option | Description |
+|--------|-------------|
+| `--template-version VERSION` | Specify template version to download (default: `latest`) |
+| `--force` / `-f` | Overwrite existing `.specify/` directory |
+| `--offline` | Use cached templates without network access |
+| `--minimal` | Install only essential templates (spec, plan, tasks, constitution) |
+
+### `specify check` Options
+
+| Option | Description |
+|--------|-------------|
+| `--quality` | Run quality tool checks (eslint, pylint, etc.) if configured |
+| `--validation TYPE` | Which validation scripts to run: `all`, `structure`, `naming`, `frontmatter`, `none` |
+| `--update-templates` | Check for newer template versions and prompt to update |
+| `--fix` | Attempt automatic fixes for detected issues |
+| `--format FORMAT` | Output format: `text`, `json`, `yaml` (default: `text`) |
+| `--verbose` | Show detailed output including all validation messages |
 
 ### Examples
 
 ```bash
-# Basic project initialization
-specify init my-project
+# Initialize with latest templates
+specify init
 
-# Initialize with specific AI assistant
-specify init my-project --ai claude
+# Initialize with specific template version
+specify init --template-version v2.0.0
 
-# Initialize with Cursor support
-specify init my-project --ai cursor
+# Force overwrite existing .specify/
+specify init --force
 
-# Initialize with Windsurf support
-specify init my-project --ai windsurf
+# Offline mode (use cached templates)
+specify init --offline
 
-# Initialize with PowerShell scripts (Windows/cross-platform)
-specify init my-project --ai copilot --script ps
+# Minimal installation (essential templates only)
+specify init --minimal
 
-# Initialize in current directory
-specify init . --ai copilot
-# or use the --here flag
-specify init --here --ai copilot
-
-# Force merge into current (non-empty) directory without confirmation
-specify init . --force --ai copilot
-# or 
-specify init --here --force --ai copilot
-
-# Skip git initialization
-specify init my-project --ai gemini --no-git
-
-# Enable debug output for troubleshooting
-specify init my-project --ai claude --debug
-
-# Use GitHub token for API requests (helpful for corporate environments)
-specify init my-project --ai claude --github-token ghp_your_token_here
-
-# Check system requirements
+# Run all validation checks
 specify check
+
+# Run specific validation
+specify check --validation naming
+
+# Check with quality tools
+specify check --quality
+
+# Output as JSON
+specify check --format json
+
+# Check for template updates
+specify check --update-templates
+
+# Automatic fixes
+specify check --fix
 ```
 
 ### Available Slash Commands
@@ -222,58 +227,65 @@ After running `specify init`, your AI coding agent will have access to these sla
 |------------------|------------------------------------------------------------------------------------------------|
 | `SPECIFY_FEATURE` | Override feature detection for non-Git repositories. Set to the feature directory name (e.g., `001-photo-albums`) to work on a specific feature when not using Git branches.<br/>**Must be set in the context of the agent you're working with prior to using `/plan` or follow-up commands. |
 
-## 📚 Core philosophy
+## 📚 Core Philosophy
 
-Spec-Driven Development is a structured process that emphasizes:
+Spec-Kit v2.0 follows seven constitutional principles:
 
-- **Intent-driven development** where specifications define the "_what_" before the "_how_"
-- **Rich specification creation** using guardrails and organizational principles
-- **Multi-step refinement** rather than one-shot code generation from prompts
-- **Heavy reliance** on advanced AI model capabilities for specification interpretation
+### 1. **Cross-Platform Compatibility**
+Support all 10 major AI coding platforms with consistent behavior across Windows, macOS, and Linux.
 
-## 🌟 Development phases
+### 2. **Multi-Installation Support**
+Work seamlessly with both persistent (`uv tool`) and one-time (`uvx`) installation methods.
 
-| Phase | Focus | Key Activities |
-|-------|-------|----------------|
-| **0-to-1 Development** ("Greenfield") | Generate from scratch | <ul><li>Start with high-level requirements</li><li>Generate specifications</li><li>Plan implementation steps</li><li>Build production-ready applications</li></ul> |
-| **Creative Exploration** | Parallel implementations | <ul><li>Explore diverse solutions</li><li>Support multiple technology stacks & architectures</li><li>Experiment with UX patterns</li></ul> |
-| **Iterative Enhancement** ("Brownfield") | Brownfield modernization | <ul><li>Add features iteratively</li><li>Modernize legacy systems</li><li>Adapt processes</li></ul> |
+### 3. **Template-Driven Consistency**
+High-quality markdown templates as the core system—agents fill templates, not write from scratch.
 
-## 🎯 Experimental goals
+### 4. **Agent-Native Execution**
+AI agents remain the primary actors. The system augments capabilities, never replaces agent intelligence.
 
-Our research and experimentation focus on:
+### 5. **Simplicity Principle**
+Minimal tooling overhead:
+- CLI <400 lines of code
+- Only 4 dependencies (stdlib, requests, PyYAML, click)
+- Zero analysis engines
 
-### Technology independence
+### 6. **Governance Balance**
+Non-blocking validation that preserves user autonomy:
+- Scripts provide warnings, not errors
+- Agents report findings to users
+- Users make final decisions
 
-- Create applications using diverse technology stacks
-- Validate the hypothesis that Spec-Driven Development is a process not tied to specific technologies, programming languages, or frameworks
+### 7. **Backward Compatibility**
+Existing v1.x projects work without modification. Clear migration path provided.
 
-### Enterprise constraints
+## 🔍 Migration from v1.x
 
-- Demonstrate mission-critical application development
-- Incorporate organizational constraints (cloud providers, tech stacks, engineering practices)
-- Support enterprise design systems and compliance requirements
+### What Changed
+- **Removed**: Complex analysis engines, automated brownfield scanners
+- **Simplified**: CLI to only `init` and `check` commands
+- **Enhanced**: Templates with agent-augmented guidance
+- **Added**: Cross-platform validation scripts (bash + PowerShell)
 
-### User-centric development
+### Migration Steps
+1. Install v2.0: `uv tool install specify-cli@2.0.0`
+2. Run in existing project: `specify check`
+3. Review migration suggestions: `specify check --migrate`
+4. Update `.specify/` when ready (your specs stay unchanged)
 
-- Build applications for different user cohorts and preferences
-- Support various development approaches (from vibe-coding to AI-native development)
-
-### Creative & iterative processes
-
-- Validate the concept of parallel implementation exploration
-- Provide robust iterative feature development workflows
-- Extend processes to handle upgrades and modernization tasks
+### Compatibility
+✅ V1.x artifacts validate successfully  
+✅ V1.x frontmatter format unchanged  
+✅ V1.x folder structure supported  
+⚠️ New validation scripts recommended (optional)
 
 ## 🔧 Prerequisites
 
-- **Linux/macOS** (or WSL2 on Windows)
-- AI coding agent: [Claude Code](https://www.anthropic.com/claude-code), [GitHub Copilot](https://code.visualstudio.com/), [Gemini CLI](https://github.com/google-gemini/gemini-cli), [Cursor](https://cursor.sh/), [Qwen CLI](https://github.com/QwenLM/qwen-code), [opencode](https://opencode.ai/), [Codex CLI](https://github.com/openai/codex), or [Windsurf](https://windsurf.com/)
-- [uv](https://docs.astral.sh/uv/) for package management
-- [Python 3.11+](https://www.python.org/downloads/)
-- [Git](https://git-scm.com/downloads)
+- **Python 3.9+** (reduced from 3.11+)
+- **uv** package manager - [Install uv](https://docs.astral.sh/uv/)
+- **Git** (optional, for branch management)
+- **AI coding agent** - Any of the 10 supported platforms
 
-If you encounter issues with an agent, please open an issue so we can refine the integration.
+**No other dependencies required!** The CLI uses only standard library + 3 minimal packages.
 
 ## 📖 Learn more
 

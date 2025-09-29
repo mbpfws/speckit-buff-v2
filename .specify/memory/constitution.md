@@ -1,148 +1,50 @@
-<!--
-Sync Impact Report
-==================
-
-Version Change: None → 1.0.0 (initial constitution)
-
-Modified Principles: None (all new)
-
-Added Sections:
-- Core Principles (I-VII)
-- Cross-Platform Constraints
-- Development Workflow
-- Governance
-
-Templates Updated:
-✅ .specify/templates/plan-template.md - Added comprehensive Constitution Check section
-✅ .specify/templates/spec-template.md - Added cross-platform validation and template consistency
-✅ .specify/templates/tasks-template.md - Added constitution-related tasks and validation
-✅ .specify/scripts/bash/ (5 files) - Added constitution compliance headers and documentation
-
-Follow-up TODOs:
-- Create AGENTS.md for platform-specific implementation guidelines
-- Establish cross-platform testing framework
-- Set up template synchronization automation
--->
-
-# Spec-Kit Buff Constitution
+# [PROJECT_NAME] Constitution
+<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
 
 ## Core Principles
 
-### I. Cross-Platform Compatibility
-Any new feature or modification MUST work seamlessly across all 10 supported AI coding platforms (Claude Code, GitHub Copilot, Gemini CLI, Cursor, Qwen Code, opencode, Windsurf, Kilo Code, Auggie CLI, Roo Code). Features MUST use each platform's native command definitions and execution patterns.
+### [PRINCIPLE_1_NAME]
+<!-- Example: I. Library-First -->
+[PRINCIPLE_1_DESCRIPTION]
+<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
 
-### II. Multi-Installation Support
-All features MUST support both installation options:
-- Persistent installation: Tool stays installed and available in PATH
-- One-time usage: Run directly without installation using uvx
-Features MUST NOT assume or depend on a specific installation method.
+### [PRINCIPLE_2_NAME]
+<!-- Example: II. CLI Interface -->
+[PRINCIPLE_2_DESCRIPTION]
+<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
 
-### III. Architecture-First Development
-- MUST conduct comprehensive system architecture planning before implementation
-- MUST include technology stack interoperability analysis
-- MUST validate library/SDK compatibility across all platforms
-- MUST create contingency plans for real-world scenarios
+### [PRINCIPLE_3_NAME]
+<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
+[PRINCIPLE_3_DESCRIPTION]
+<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
 
-### IV. Template-Driven Consistency
-All modifications MUST preserve and extend the existing template system:
-- Scripts: Bash/PowerShell automation MUST work across platforms
-- Templates: All template files MUST maintain consistent structure
-- Commands: Slash commands MUST follow established patterns
-- Rules: Governance rules MUST be platform-agnostic
-- Constitution: MUST remain the single source of truth
+### [PRINCIPLE_4_NAME]
+<!-- Example: IV. Integration Testing -->
+[PRINCIPLE_4_DESCRIPTION]
+<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
 
-### V. Synchronicity Enforcement
-Changes MUST propagate automatically across all related files and platforms:
-- Single change MUST trigger updates to all dependent artifacts
-- Platform-specific files (.claude/, .roo/, etc.) MUST stay synchronized
-- Template modifications MUST reflect in all instantiated copies
+### [PRINCIPLE_5_NAME]
+<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
+[PRINCIPLE_5_DESCRIPTION]
+<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
 
-### VI. Agent-Native Execution
-All automation MUST be executable by the intended AI coding agents:
-- Shell/bash commands MUST be runnable by all 10 platforms
-- Git operations MUST use platform-native PR/branch/commit workflows
-- MCP server tools MUST follow cross-platform compatibility patterns
-- Features MUST inject as commands/rules that agents execute natively
+## [SECTION_2_NAME]
+<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
 
-### VII. Hierarchical Governance
-- Constitution: Core principles and governance (this file)
-- AGENTS.md: Platform-specific implementation guidelines
-- CLAUDE.md: Claude Code specific instructions
-- Templates: Reusable patterns for all artifacts
-- Scripts: Automation executable by all platforms
+[SECTION_2_CONTENT]
+<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
 
-## Cross-Platform Constraints
+## [SECTION_3_NAME]
+<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
 
-### Supported Platforms
-All features MUST support these platforms without exception:
-- Claude Code
-- GitHub Copilot
-- Gemini CLI
-- Cursor
-- Qwen Code
-- opencode
-- Windsurf
-- Kilo Code
-- Auggie CLI
-- Roo Code
-
-### Command Patterns
-- MUST use each platform's native slash command format
-- MUST NOT introduce platform-specific dependencies
-- MUST provide consistent behavior across all platforms
-
-### File Structure
-- `.specify/`: Core template and script definitions
-- `.claude/`: Claude Code specific configurations
-- `.roo/`: Roo Code specific configurations
-- `templates/`: Platform-agnostic template files
-- All structures MUST follow hierarchical naming conventions
-
-## Development Workflow
-
-### 1. Architecture Planning Phase
-- Comprehensive system analysis
-- Technology stack validation
-- Cross-platform compatibility verification
-- Contingency planning
-
-### 2. Knowledge Integration
-- Utilize MCP servers for research
-- Maintain hierarchical documentation
-- Continuous knowledge ingestion cycles
-
-### 3. Template Synchronization
-- Single source of truth principle
-- Automatic propagation across all platforms
-- Validation of consistency before deployment
-
-### 4. Agent Orchestration
-- Role-based agent selection
-- Context-aware switching
-- Specialized task delegation
+[SECTION_3_CONTENT]
+<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
 
 ## Governance
+<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-### Amendment Process
-1. Proposed changes MUST be validated against all 10 platforms
-2. Impact analysis MUST include cross-platform compatibility
-3. Changes MUST be tested on at least 3 platforms before approval
-4. ALL dependent templates MUST be updated simultaneously
+[GOVERNANCE_RULES]
+<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
 
-### Versioning Policy
-- MAJOR: Backward incompatible changes or platform removals
-- MINOR: New platform support or feature additions
-- PATCH: Bug fixes or documentation updates
-
-### Compliance Review
-- Monthly cross-platform compatibility audits
-- Quarterly template synchronization reviews
-- Annual architecture validation
-
-### Runtime Guidance
-- Use AGENTS.md for platform-specific implementation patterns
-- Consult CLAUDE.md for Claude Code specific instructions
-- Reference individual platform documentation (.roo/, etc.)
-- Follow constitution as supreme governance document
-
-**Version**: 1.0.0 | **Ratified**: 2025-01-01 | **Last Amended**: 2025-01-18
+**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
+<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->

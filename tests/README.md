@@ -1,100 +1,74 @@
-# Test Suite
-
-This directory contains the test suite for the Spec-Kit Enhancement Initiative.
+# Spec-Kit Tests
 
 ## Test Structure
 
-```
-tests/
-├── contract/          # Contract tests (API definitions)
-│   ├── test_project_analyzer.py
-│   ├── test_architecture_engine.py
-│   ├── test_governance_system.py
-│   └── test_agent_workflow.py
-├── integration/       # Integration tests (to be implemented)
-├── unit/             # Unit tests (to be implemented)
-├── requirements.txt  # Test dependencies
-├── pytest.ini       # Pytest configuration
-└── run_contract_tests.py  # Helper script to verify TDD
-```
+- `contract/` - Contract tests for CLI commands (T006-T008)
+- `integration/` - End-to-end integration tests (T009-T018)
+- `unit/` - Unit tests for individual modules
 
 ## Running Tests
 
-### Install Test Dependencies
 ```bash
-pip install -r tests/requirements.txt
+# Run all tests
+pytest
+
+# Run specific test suite
+pytest tests/contract/
+pytest tests/integration/
+pytest tests/unit/
+
+# Run with coverage
+pytest --cov=specify_cli --cov-report=html
+
+# Run specific test
+pytest tests/contract/test_cli_init.py::TestInitEmptyDirectory
 ```
 
-### Run All Tests
-```bash
-pytest tests/
-```
+## Test Status
 
-### Run Contract Tests Only
-```bash
-pytest tests/contract/ -m contract
-```
+### Phase 3.2: Contract Tests (TDD)
 
-### Run Integration Tests Only
-```bash
-pytest tests/integration/ -m integration
-```
+All tests written following TDD - they MUST fail initially:
 
-### Run Unit Tests Only
-```bash
-pytest tests/unit/ -m unit
-```
+- ✅ T006: `test_cli_init.py` - CLI init command contract tests
+- ✅ T007: `test_cli_check.py` - CLI check command contract tests
+- ✅ T008: `test_validation_api.py` - Validation script API tests
+- ⏳ T009-T018: Integration tests (partial - key tests created)
 
-### Verify TDD (Tests Should Fail)
-```bash
-python tests/run_contract_tests.py
-```
+### Expected Initial State
 
-## Test Markers
+All contract tests should **FAIL** initially because implementation doesn't exist yet.
+This is the correct TDD approach:
 
-- `@pytest.mark.contract`: Tests that verify API contracts
-- `@pytest.mark.integration`: Tests that verify component integration
-- `@pytest.mark.unit`: Tests that verify individual components
+1. ❌ Write failing tests (Phase 3.2)
+2. ✅ Implement code to make tests pass (Phase 3.3)
+3. ✅ Refactor while keeping tests green
 
-## TDD Approach
+## Test Categories
 
-The contract tests follow the Test-Driven Development (TDD) approach:
+### Contract Tests
+Based on `contracts/*.yaml` specifications:
+- Define expected CLI behavior
+- Test all success and error cases
+- Validate performance targets
+- Ensure proper exit codes
 
-1. **Red**: Write failing tests first (Phase 3.2)
-2. **Green**: Implement the minimum code to make tests pass (Phase 3.3)
-3. **Refactor**: Improve the implementation while keeping tests green (Phase 3.4+)
+### Integration Tests
+Based on `quickstart.md` scenarios:
+- Test complete workflows end-to-end
+- Verify cross-platform compatibility
+- Validate performance requirements
+- Test offline capabilities
 
-Currently in **Red phase** - tests are written and should fail because the implementations don't exist yet.
+### Unit Tests
+Test individual modules in isolation:
+- `template_loader.py` functions
+- `validators.py` functions
+- Utility helpers
 
-## Test Coverage
+## Coverage Goals
 
-The contract tests cover:
-
-1. **Project Analyzer API** (`test_project_analyzer.py`)
-   - Project analysis endpoint
-   - Architecture analysis endpoint
-   - Error handling and validation
-
-2. **Architecture Engine API** (`test_architecture_engine.py`)
-   - Pattern detection endpoint
-   - Architecture guidance endpoint
-   - Various analysis modes
-
-3. **Governance System API** (`test_governance_system.py`)
-   - Artifact creation endpoint
-   - Synchronization endpoint
-   - Validation endpoint
-   - Platform-specific features
-
-4. **Agent Workflow Manager API** (`test_agent_workflow.py`)
-   - Context management endpoint
-   - Prompt optimization endpoint
-   - Agent validation endpoint
-   - Cross-platform support
-
-## Notes
-
-- All tests are asynchronous and use `httpx` for HTTP testing
-- Tests validate both successful responses and error conditions
-- Tests follow the OpenAPI specifications defined in `specs/001-improve-spec-kit/contracts/`
-- Mock servers are not used - tests expect real implementations to exist
+- Contract tests: 100% of contracts covered
+- Integration tests: All 10 quickstart scenarios
+- Unit tests: >80% code coverage
+- Overall: >85% coverage target

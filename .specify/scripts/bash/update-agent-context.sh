@@ -2,12 +2,8 @@
 
 # Update agent context files with information from plan.md
 #
-# CONSTITUTION COMPLIANCE:
-# - Cross-Platform: Supports all 10 AI coding platforms with unified interface
-# - Agent-Native: Executable by all AI agents to maintain their own context
-# - Template-Driven: Uses standardized templates and update patterns
-# - Synchronicity: Ensures all agent files stay synchronized with plan changes
-# - Hierarchical Governance: Maintains proper hierarchy between constitution and agent files
+# This script maintains AI agent context files by parsing feature specifications 
+# and updating agent-specific configuration files with project information.
 #
 # MAIN FUNCTIONS:
 # 1. Environment Validation

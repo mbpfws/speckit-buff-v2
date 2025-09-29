@@ -1,15 +1,7 @@
 #!/usr/bin/env bash
 # Common functions and variables for all scripts
-#
-# CONSTITUTION COMPLIANCE:
-# - Cross-Platform: Platform-agnostic functions work across all environments
-# - Agent-Native: Standardized functions usable by all AI agents
-# - Template-Driven: Reusable utility functions following established patterns
-# - Multi-Installation: Works with both persistent and one-time installations
-# - Hierarchical Governance: Provides foundation for constitution-compliant workflows
 
 # Get repository root, with fallback for non-git repositories
-# Constitution: Cross-Platform - works with and without git
 get_repo_root() {
     if git rev-parse --show-toplevel >/dev/null 2>&1; then
         git rev-parse --show-toplevel
@@ -21,7 +13,6 @@ get_repo_root() {
 }
 
 # Get current branch, with fallback for non-git repositories
-# Constitution: Cross-Platform - handles both git and non-git environments
 get_current_branch() {
     # First check if SPECIFY_FEATURE environment variable is set
     if [[ -n "${SPECIFY_FEATURE:-}" ]]; then
@@ -67,47 +58,42 @@ get_current_branch() {
 }
 
 # Check if we have git available
-# Constitution: Multi-Installation - graceful degradation without git
 has_git() {
     git rev-parse --show-toplevel >/dev/null 2>&1
 }
 
-# Constitution: Hierarchical Governance - enforces branch naming conventions
 check_feature_branch() {
     local branch="$1"
     local has_git_repo="$2"
-
+    
     # For non-git repos, we can't enforce branch naming but still provide output
-    # Constitution: Multi-Installation - graceful degradation without git
     if [[ "$has_git_repo" != "true" ]]; then
         echo "[specify] Warning: Git repository not detected; skipped branch validation" >&2
         return 0
     fi
-
+    
     if [[ ! "$branch" =~ ^[0-9]{3}- ]]; then
         echo "ERROR: Not on a feature branch. Current branch: $branch" >&2
         echo "Feature branches should be named like: 001-feature-name" >&2
         return 1
     fi
-
+    
     return 0
 }
 
-# Constitution: Template-Driven - standardized path generation
 get_feature_dir() { echo "$1/specs/$2"; }
 
-# Constitution: Synchronicity - ensures all paths are consistent and synchronized
 get_feature_paths() {
     local repo_root=$(get_repo_root)
     local current_branch=$(get_current_branch)
     local has_git_repo="false"
-
+    
     if has_git; then
         has_git_repo="true"
     fi
-
+    
     local feature_dir=$(get_feature_dir "$repo_root" "$current_branch")
-
+    
     cat <<EOF
 REPO_ROOT='$repo_root'
 CURRENT_BRANCH='$current_branch'

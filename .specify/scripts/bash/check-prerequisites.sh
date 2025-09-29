@@ -5,12 +5,6 @@
 # This script provides unified prerequisite checking for Spec-Driven Development workflow.
 # It replaces the functionality previously spread across multiple scripts.
 #
-# CONSTITUTION COMPLIANCE:
-# - Cross-Platform: Works across all 10 supported AI coding platforms
-# - Agent-Native: Executable by all AI agents with bash capability
-# - Template-Driven: Uses standardized script patterns and error handling
-# - Hierarchical Governance: Follows constitution-established workflow patterns
-#
 # Usage: ./check-prerequisites.sh [OPTIONS]
 #
 # OPTIONS:
@@ -85,7 +79,6 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/common.sh"
 
 # Get feature paths and validate branch
-# Constitution: Hierarchical Governance - follow established branch patterns
 eval $(get_feature_paths)
 check_feature_branch "$CURRENT_BRANCH" "$HAS_GIT" || exit 1
 
@@ -107,7 +100,6 @@ if $PATHS_ONLY; then
 fi
 
 # Validate required directories and files
-# Constitution: Architecture-First - ensure proper workflow sequence
 if [[ ! -d "$FEATURE_DIR" ]]; then
     echo "ERROR: Feature directory not found: $FEATURE_DIR" >&2
     echo "Run /specify first to create the feature structure." >&2
