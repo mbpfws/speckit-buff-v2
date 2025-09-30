@@ -15,37 +15,38 @@ Added Sections:
 Templates Updated:
 ✅ .specify/templates/plan-template.md - Added comprehensive Constitution Check section
 ✅ .specify/templates/spec-template.md - Added cross-platform validation and template consistency
-✅ .specify/templates/tasks-template.md - Added constitution-related tasks and validation
-✅ .specify/scripts/bash/ (5 files) - Added constitution compliance headers and documentation
-
-Follow-up TODOs:
-- Create AGENTS.md for platform-specific implementation guidelines
-- Establish cross-platform testing framework
-- Set up template synchronization automation
--->
-
-# Spec-Kit Buff Constitution
 
 ## Core Principles
 
 ### I. Cross-Platform Compatibility
-Any new feature or modification MUST work seamlessly across all 10 supported AI coding platforms (Claude Code, GitHub Copilot, Gemini CLI, Cursor, Qwen Code, opencode, Windsurf, Kilo Code, Auggie CLI, Roo Code). Features MUST use each platform's native command definitions and execution patterns.
+All features, templates, and workflows must function consistently across:
+- **10 AI Coding platforms**: Claude Code, Roo Code, GitHub Copilot, Cursor, Gemini CLI, Qwen Code, opencode, Windsurf, Kilo Code, Auggie CLI
+- **3 Operating Systems**: Windows, macOS, Linux
+- **Platform-native patterns**: Each platform's workflow syntax and capabilities must be respected
+- **Identical behavior**: Scripts must produce identical output regardless of platform
 
 ### II. Multi-Installation Support
-All features MUST support both installation options:
-- Persistent installation: Tool stays installed and available in PATH
-- One-time usage: Run directly without installation using uvx
-Features MUST NOT assume or depend on a specific installation method.
+The framework must work seamlessly with both installation methods:
+- **Persistent installation**: `uv tool install specify-cli` (PATH-based)
+- **One-time usage**: `uvx specify-cli init` (temporary execution)
+- **No installation assumptions**: Workflows must not depend on specific installation method
+- **Offline capability**: Essential operations must work without network access
 
-### III. Architecture-First Development
-- MUST conduct comprehensive system architecture planning before implementation
-- MUST include technology stack interoperability analysis
-- MUST validate library/SDK compatibility across all platforms
-- MUST create contingency plans for real-world scenarios
+### III. Template-Driven Consistency
+Templates are the foundation of the system:
+- **Templates guide**: High-quality markdown templates provide structure and guidance
+- **Agents fill**: AI agents populate templates, not create from scratch
+- **Standardized format**: YAML frontmatter + markdown body for all templates
+- **Embedded guidance**: Templates include agent-specific instructions and examples
+- **Version stability**: Template changes must be backward compatible
 
-### IV. Template-Driven Consistency
-All modifications MUST preserve and extend the existing template system:
-- Scripts: Bash/PowerShell automation MUST work across platforms
+### IV. Agent-Native Execution
+AI agents are the primary actors:
+- **Workflows are markdown**: Commands defined as markdown files with YAML frontmatter, not CLI commands
+- **Agents execute**: Agents read workflows and execute steps, system augments
+- **Leverage capabilities**: Use agent native features (web search, code analysis, multi-file edits)
+- **Multi-stage research**: Complex features trigger iterative research workflows
+- **Intelligent orchestration**: Workflows can automatically trigger other workflows based on conditions
 - Templates: All template files MUST maintain consistent structure
 - Commands: Slash commands MUST follow established patterns
 - Rules: Governance rules MUST be platform-agnostic
@@ -145,4 +146,40 @@ All features MUST support these platforms without exception:
 - Reference individual platform documentation (.roo/, etc.)
 - Follow constitution as supreme governance document
 
-**Version**: 1.0.0 | **Ratified**: 2025-01-01 | **Last Amended**: 2025-01-18
+---
+
+## Orchestration Principles (v2.0 Extension)
+
+### VIII. Intelligent Workflow Chaining
+Workflows can automatically trigger other workflows:
+- **Auto-triggers**: Unconditional workflow execution (e.g., complexity detection before spec creation)
+- **Conditional chains**: Trigger workflows based on context conditions (e.g., research-tech if complexity >= medium)
+- **Pre-conditions**: Workflows can require specific context states before execution
+- **Post-conditions**: Workflows update context on completion for downstream workflows
+- **Maximum iterations**: Research workflows have iteration limits to prevent infinite loops
+
+### IX. Complexity-Driven Research
+Simple descriptions don't mean simple implementations:
+- **Complexity detection**: Automatic analysis of feature descriptions for technical depth
+- **Multi-stage research**: Iterative research passes for complex technology stacks
+- **Web search mandatory**: Always use current information from web search, never assume
+- **Research artifacts**: Document findings in research.md with citations and versions
+- **Technology recommendations**: Research must produce specific versions and SDKs, not vague suggestions
+
+### X. Context-Aware Execution
+Workflows share state through persistent context:
+- **Context file**: `.specify/context.json` stores workflow state and findings
+- **Condition evaluation**: Workflows read context to determine execution path
+- **State transitions**: Each workflow updates context with completion flags
+- **Multi-domain detection**: Automatically identify when features span multiple domains
+- **Research pass tracking**: Count research iterations to ensure thoroughness
+
+### XI. Domain-Driven Architecture
+Architecture decisions are research-driven:
+- **Domain identification**: Automatically detect business domains from specifications
+- **Pattern research**: Research proven patterns for detected domains
+- **Multi-domain integration**: Trigger integration research when multiple domains detected
+- **Case study priority**: Prefer production case studies over theoretical recommendations
+- **Source citation**: All architectural decisions must cite research sources
+
+**Version**: 2.0.0 | **Ratified**: 2025-01-01 | **Last Amended**: 2025-01-30

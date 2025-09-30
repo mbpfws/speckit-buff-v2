@@ -1,16 +1,6 @@
 ---
 description: Create feature specification through iterative conversation with complexity analysis and research
-scripts:
-  sh: scripts/bash/create-new-feature.sh --json "{ARGS}"
-  ps: scripts/powershell/create-new-feature.ps1 -Json "{ARGS}"
-orchestration:
-  auto_trigger: ["detect-complexity"]
-  conditional_chains:
-    - condition: "complexity_level >= medium"
-      workflow: "research-tech"
-      reason: "Complex technical requirements detected"
-  next: "clarify"
-  mode: "conversational"
+auto_execution_mode: 3
 ---
 
 **IMPORTANT**: This workflow is CONVERSATIONAL. Do NOT immediately create spec.md. Instead:

@@ -14,9 +14,9 @@ Follow TDD: Tests before implementation.
 ## Summary
 
 **Total Tasks**: 50  
-**Completed**: T001-T029 (29 tasks) ✅  
-**Remaining**: T030-T050 (21 tasks)  
-**Current Phase**: 3.5 (Validation Scripts)
+**Completed**: T001-T050 (50 tasks) ✅  
+**Remaining**: T051-T062 (12 optional tasks)  
+**Current Phase**: 3.6 (Integration Complete)
 
 ---
 
@@ -77,21 +77,21 @@ Follow TDD: Tests before implementation.
 
 ### Bash Validation Scripts
 
-- [ ] **T030** [P] Create scripts/bash/validate-structure.sh
+- [x] **T030** [P] Create scripts/bash/validate-structure.sh
   - File: `scripts/bash/validate-structure.sh`
   - Check: .specify/ directory structure, specs/ exists, folder naming {id}-{slug}
   - Output: `[INFO]`, `[WARN]`, `[ERROR]` messages
   - Exit: code 0 (non-blocking)
   - ~50 LOC
 
-- [ ] **T031** [P] Create scripts/bash/validate-naming.sh
+- [x] **T031** [P] Create scripts/bash/validate-naming.sh
   - File: `scripts/bash/validate-naming.sh`
   - Check: File naming conventions (kebab-case, no spaces)
   - Output: `[INFO]`, `[WARN]`, `[ERROR]` messages
   - Exit: code 0 (non-blocking)
   - ~40 LOC
 
-- [ ] **T032** [P] Create scripts/bash/validate-frontmatter.sh
+- [x] **T032** [P] Create scripts/bash/validate-frontmatter.sh
   - File: `scripts/bash/validate-frontmatter.sh`
   - Check: YAML frontmatter presence and required fields
   - Output: `[INFO]`, `[WARN]`, `[ERROR]` messages
@@ -100,21 +100,21 @@ Follow TDD: Tests before implementation.
 
 ### Bash Helper Scripts
 
-- [ ] **T033** [P] Create scripts/bash/check-prerequisites.sh
+- [x] **T033** [P] Create scripts/bash/check-prerequisites.sh
   - File: `scripts/bash/check-prerequisites.sh`
   - Flags: `--json`, `--paths-only`, `--require-tasks`, `--include-tasks`
   - Output JSON: REPO_ROOT, BRANCH, FEATURE_DIR, FEATURE_SPEC, IMPL_PLAN, TASKS, AVAILABLE_DOCS
   - Used by: /clarify, /tasks, /analyze, /implement workflows
   - ~80 LOC
 
-- [ ] **T034** [P] Create scripts/bash/setup-plan.sh
+- [x] **T034** [P] Create scripts/bash/setup-plan.sh
   - File: `scripts/bash/setup-plan.sh`
   - Flags: `--json`
   - Output JSON: REPO_ROOT, BRANCH, FEATURE_SPEC, IMPL_PLAN, SPECS_DIR
   - Used by: /plan workflow
   - ~60 LOC
 
-- [ ] **T035** [P] Create scripts/bash/create-new-feature.sh
+- [x] **T035** [P] Create scripts/bash/create-new-feature.sh
   - File: `scripts/bash/create-new-feature.sh`
   - Args: Feature description as $1
   - Flags: `--json`
@@ -123,7 +123,7 @@ Follow TDD: Tests before implementation.
   - Used by: /specify workflow
   - ~70 LOC
 
-- [ ] **T036** [P] Create scripts/bash/update-agent-context.sh
+- [x] **T036** [P] Create scripts/bash/update-agent-context.sh
   - File: `scripts/bash/update-agent-context.sh`
   - Args: Agent type (windsurf, claude, cursor, etc.)
   - Actions: Update/create agent-specific file (WINDSURF.md, CLAUDE.md, etc.)
@@ -133,20 +133,20 @@ Follow TDD: Tests before implementation.
 
 ### PowerShell Validation Scripts
 
-- [ ] **T037** [P] Create scripts/powershell/validate-structure.ps1
+- [x] **T037** [P] Create scripts/powershell/validate-structure.ps1
   - File: `scripts/powershell/validate-structure.ps1`
   - Identical behavior to bash version
   - Output format must match exactly
   - Use `Write-Output` for messages
   - ~50 LOC
 
-- [ ] **T038** [P] Create scripts/powershell/validate-naming.ps1
+- [x] **T038** [P] Create scripts/powershell/validate-naming.ps1
   - File: `scripts/powershell/validate-naming.ps1`
   - Identical behavior to bash version
   - Output format must match exactly
   - ~40 LOC
 
-- [ ] **T039** [P] Create scripts/powershell/validate-frontmatter.ps1
+- [x] **T039** [P] Create scripts/powershell/validate-frontmatter.ps1
   - File: `scripts/powershell/validate-frontmatter.ps1`
   - Identical behavior to bash version
   - YAML parsing with PowerShell-Yaml or native
@@ -154,7 +154,7 @@ Follow TDD: Tests before implementation.
 
 ### PowerShell Helper Scripts
 
-- [ ] **T040** [P] Create scripts/powershell/check-prerequisites.ps1
+- [x] **T040** [P] Create scripts/powershell/check-prerequisites.ps1
   - File: `scripts/powershell/check-prerequisites.ps1`
   - Flags: `-Json`, `-PathsOnly`, `-RequireTasks`, `-IncludeTasks`
   - Output JSON: Same structure as bash version
@@ -162,13 +162,13 @@ Follow TDD: Tests before implementation.
   - Convert backslashes to forward slashes in paths
   - ~80 LOC
 
-- [ ] **T041** [P] Create scripts/powershell/setup-plan.ps1
+- [x] **T041** [P] Create scripts/powershell/setup-plan.ps1
   - File: `scripts/powershell/setup-plan.ps1`
   - Flags: `-Json`
   - Output JSON: Same structure as bash version
   - ~60 LOC
 
-- [ ] **T042** [P] Create scripts/powershell/create-new-feature.ps1
+- [x] **T042** [P] Create scripts/powershell/create-new-feature.ps1
   - File: `scripts/powershell/create-new-feature.ps1`
   - Args: Feature description as param
   - Flags: `-Json`
@@ -176,7 +176,7 @@ Follow TDD: Tests before implementation.
   - Output JSON: Same structure as bash version
   - ~70 LOC
 
-- [ ] **T043** [P] Create scripts/powershell/update-agent-context.ps1
+- [x] **T043** [P] Create scripts/powershell/update-agent-context.ps1
   - File: `scripts/powershell/update-agent-context.ps1`
   - Args: `-AgentType` parameter
   - Actions: Same as bash version
@@ -184,27 +184,27 @@ Follow TDD: Tests before implementation.
 
 ### Script Testing
 
-- [ ] **T044** [P] Create tests/integration/test_script_parity.py
+- [x] **T044** [P] Create tests/integration/test_script_parity.py
   - File: `tests/integration/test_script_parity.py`
   - Tests: For each script pair (bash + PS), verify identical JSON output
   - Platform detection: Run bash on Unix, PowerShell on Windows
   - Parse JSON and compare structures
   - ~100 LOC
 
-- [ ] **T045** [P] Create tests/integration/test_json_contracts.py
+- [x] **T045** [P] Create tests/integration/test_json_contracts.py
   - File: `tests/integration/test_json_contracts.py`
   - Tests: Verify JSON output matches documented contracts
   - Validate: All required fields present, paths are absolute, forward slashes
   - ~80 LOC
 
-- [ ] **T046** Update specify_cli/commands/init.py to copy scripts
+- [x] **T046** Update specify_cli/commands/init.py to copy scripts
   - File: `specify_cli/commands/init.py`
   - Add function: `_copy_source_scripts(scripts_dir)` similar to `_copy_source_templates`
   - Copy from `scripts/` → `.specify/scripts/`
   - Set executable permissions for bash scripts (chmod +x)
   - ~20 LOC addition (stays under 400 LOC budget)
 
-- [ ] **T047** Update specify_cli/commands/check.py to execute scripts
+- [x] **T047** Update specify_cli/commands/check.py to execute scripts
   - File: `specify_cli/commands/check.py`
   - Currently calls validators.run_validation_script()
   - Verify it works with actual scripts (not placeholders)
@@ -215,21 +215,21 @@ Follow TDD: Tests before implementation.
 
 ## Phase 3.6: Integration & Documentation (T048-T054)
 
-- [ ] **T048** Update pyproject.toml for package data
+- [x] **T048** Update pyproject.toml for package data
   - File: `pyproject.toml`
   - Add: `[tool.setuptools.package-data]` section
   - Include: `"*" = ["*.md", "*.sh", "*.ps1"]`
   - Ensure scripts included in distribution
   - ~10 LOC addition
 
-- [ ] **T049** Create tests/integration/test_init_copies_scripts.py
+- [x] **T049** Create tests/integration/test_init_copies_scripts.py
   - File: `tests/integration/test_init_copies_scripts.py`
   - Tests: `specify init` copies all 14 scripts to `.specify/scripts/`
   - Verify: bash scripts are executable
   - Verify: PowerShell scripts exist
   - ~60 LOC
 
-- [ ] **T050** [P] Update documentation for v2.0
+- [x] **T050** [P] Update documentation for v2.0
   - Files: `README.md`, `CONTRIBUTING.md` (if exists)
   - Document: Template + script architecture
   - Document: Workflow system (markdown, not CLI commands)
