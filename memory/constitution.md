@@ -182,4 +182,31 @@ Architecture decisions are research-driven:
 - **Case study priority**: Prefer production case studies over theoretical recommendations
 - **Source citation**: All architectural decisions must cite research sources
 
-**Version**: 2.0.0 | **Ratified**: 2025-01-01 | **Last Amended**: 2025-01-30
+### XII. Agent Self-Regulation (NEW in v2.0)
+Agents must confirm before correcting, cite sources, use severity thresholds:
+- **User confirmation loops**: Pause for CRITICAL/MAJOR issues, ask user decision
+- **Citation requirements**: All research findings use "According to [URL]" format
+- **Severity thresholds**: CRITICAL (block), MAJOR (ask), MINOR (warn and continue)
+- **"I don't know" protocol**: Prefer research over guessing, never fabricate facts
+- **No auto-fix**: Never modify code/config without explicit user permission
+
+### XIII. Brownfield Support (NEW in v2.0)
+Template-driven analysis with confidence levels and historical context:
+- **4-pass analysis**: Document → Analyze → Integrate → Risk assessment
+- **Confidence levels**: Report High (90%+), Medium (60-90%), Low (<60%) for all findings
+- **Citation requirements**: Use "According to [URL]" for framework validation
+- **Integration strategy**: Document migration approach with risk assessment
+- **File history tracking**: Track renames/deprecations in .specify/file-history.json
+
+### XIV. Context Management (NEW in v2.0)
+Hierarchical scoping and extraction tools for large documents:
+- **Section indexes**: Use frontmatter indexes for documents >300 lines
+- **Extraction tools**: extract-section.sh for targeted content retrieval
+- **Context reduction**: Target 70% reduction in context window usage
+- **Incremental reading**: Process large documents section-by-section
+- **Hierarchical navigation**: Use frontmatter-based section navigation
+
+---
+
+**Version**: 2.1.1 | **Ratified**: 2025-06-13 | **Last Amended**: 2025-09-30  
+**Amendment**: Added 3 new principles - Agent Self-Regulation (XII), Brownfield Support (XIII), Context Management (XIV)

@@ -1,14 +1,19 @@
 ---
 description: Create feature specification through iterative conversation with complexity analysis and research
+complexity_tier_support: true  # NEW in v2.0: Supports --level flag
 scripts:
   sh: scripts/bash/create-new-feature.sh --json "{ARGS}"
   ps: scripts/powershell/create-new-feature.ps1 -Json "{ARGS}"
+  scaffold: scripts/bash/scaffold-feature.sh --level {TIER} --template spec  # NEW in v2.0
 orchestration:
-  auto_trigger: ["detect-complexity"]
+  auto_trigger: ["detect-complexity", "detect-tier"]  # NEW: detect-tier
   conditional_chains:
     - condition: "complexity_level >= medium"
       workflow: "research-tech"
       reason: "Complex technical requirements detected"
+    - condition: "tier == novice"  # NEW in v2.0
+      action: "provide_detailed_guidance"
+      reason: "Novice tier requires step-by-step instructions"
   next: "clarify"
   mode: "conversational"
 ---
@@ -37,7 +42,19 @@ $ARGUMENTS
 
 **Objective**: Understand the feature without making assumptions
 
-1. **Analyze complexity** (attempt automatic, fallback to manual):
+1. **Detect complexity tier** (NEW in v2.0):
+   ```bash
+   # Check for --level flag in arguments
+   if [[ "$ARGUMENTS" =~ --level[[:space:]]+(novice|intermediate|expert) ]]; then
+       TIER="${BASH_REMATCH[1]}"
+   else
+       TIER="intermediate"  # Default
+   fi
+   
+   # Document tier in spec.md frontmatter: complexity_tier: "$TIER"
+   ```
+
+2. **Analyze complexity** (attempt automatic, fallback to manual):
    ```bash
    # Try automatic detection (may fail - that's OK)
    echo "$ARGUMENTS" | .specify/scripts/bash/detect-complexity.sh 2>/dev/null

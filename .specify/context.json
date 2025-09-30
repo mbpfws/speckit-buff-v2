@@ -1,0 +1,83 @@
+{
+  "complexity_level": "very_high",
+  "complexity_score": 45,
+  "multi_domain": true,
+  "research_complete": true,
+  "research_passes_completed": 5,
+  "research_domains": [
+    "brownfield-software-analysis",
+    "ai-agent-context-management",
+    "dependency-version-conflicts",
+    "nextjs-app-router-architecture",
+    "test-driven-development-minimal"
+  ],
+  "technology_recommendations": {
+    "stack": [
+      "Python 3.9+ (CLI <400 LOC)",
+      "Markdown templates with YAML frontmatter",
+      "Bash + PowerShell scripts (cross-platform)",
+      "AGENTS.md + constitution.md (governance)"
+    ],
+    "integrations": [
+      "GitHub repo: https://github.com/mbpfws/speckit-buff-v2/",
+      "4 platforms: Claude Code, Windsurf, Roo Code, Cursor",
+      "npm audit, pip check (dependency detection)",
+      "Git history analysis (brownfield context)"
+    ]
+  },
+  "spec_created": true,
+  "clarifications_from_specify": 10,
+  "clarifications_resolved": 10,
+  "feature_id": "005",
+  "feature_title": "Spec-Kit Enhanced Fork - Brownfield Intelligence & Agent Self-Regulation",
+  "github_repo": "https://github.com/mbpfws/speckit-buff-v2/",
+  "mvp_platforms": ["Claude Code", "Windsurf", "Roo Code", "Cursor"],
+  "sectors": {
+    "commands": 6,
+    "templates": 8,
+    "scripts": 26,
+    "governance": 2,
+    "cli": 2
+  },
+  "total_requirements": 89,
+  "files_to_modify": 11,
+  "files_to_create": 21,
+  "total_file_changes": 32,
+  "user_decisions": {
+    "brownfield_analysis": "Both template + scripts",
+    "task_tracking": "YAML + in-code tags + validation script",
+    "architecture_patterns": "Meta-template with research (no embedded)",
+    "tag_enforcement": "Validation + Injection + Templates (all three)",
+    "agent_self_regulation": "User confirmation loops",
+    "platform_migration": "Copy workflow files to platform folders",
+    "testing_philosophy": "Realistic E2E covering extended stories",
+    "governance_hierarchy": "Enforce but allow flexibility",
+    "context_management": "Agent instructions + Frontmatter indexes",
+    "scaffolding_tiers": "Helper scripts + conditional sections"
+  },
+  "plan_generated": true,
+  "plan_phase_0_complete": true,
+  "plan_phase_1_complete": true,
+  "plan_phase_2_outlined": true,
+  "artifacts_created": [
+    "specs/005-spec-kit-enhanced/spec.md",
+    "specs/005-spec-kit-enhanced/research.md",
+    "specs/005-spec-kit-enhanced/plan.md",
+    "specs/005-spec-kit-enhanced/data-model.md",
+    "specs/005-spec-kit-enhanced/quickstart.md",
+    ".windsurf/rules/specify-rules.md",
+    ".specify/context.json"
+  ],
+  "tasks_generated": true,
+  "tasks_count": 54,
+  "tasks_by_sector": {
+    "templates": 8,
+    "scripts": 26,
+    "workflows": 6,
+    "governance": 2,
+    "cli": 2,
+    "testing": 10
+  },
+  "next_workflow": "/implement",
+  "implementation_ready": true
+}

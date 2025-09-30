@@ -1,26 +1,50 @@
 # Brownfield Project Analysis Template
 
 **Project**: [path]  
-**Date**: YYYY-MM-DD
+**Date**: YYYY-MM-DD  
+**Analyzer**: [agent/human]
 
 <!-- 
-AGENT GUIDANCE:
-4-pass systematic analysis: Scan → Research → Validate → Report
-Do NOT guess. Mark uncertainties clearly.
+AGENT GUIDANCE (Enhanced v2.0):
+4-pass systematic analysis: Document → Analyze → Integrate → Risk
+Based on BMAD Method research (see specs/005-spec-kit-enhanced/research.md)
+
+CRITICAL: Report confidence levels for ALL findings
+- High (90%+): Multiple confirming indicators, official docs validated
+- Medium (60-90%): Some indicators, partial validation
+- Low (<60%): Single indicator, no validation, educated guess
+
+Use analyze-codebase.sh script for automated tech stack detection.
+Conduct web research to validate framework versions against official docs.
 -->
 
-## Multi-Pass Workflow
+## 4-Pass Workflow
 
-**Pass 1: Initial Scan** (5-10 min) - File system reconnaissance  
-**Pass 2: Online Research** (10-15 min) - Validate with official docs  
-**Pass 3: Deep Validation** (10-15 min) - Code inspection  
-**Pass 4: Report Generation** (5 min) - Structured findings with confidence
+**Pass 1: Document System** (10-15 min) - Comprehensive file system scan + script execution  
+**Pass 2: Analyze Architecture** (15-20 min) - Pattern recognition + web research validation  
+**Pass 3: Design Integration** (10-15 min) - Identify integration points + migration strategy  
+**Pass 4: Risk Assessment** (10 min) - Legacy dependencies + breaking changes + security
 
 ---
 
-## Pass 1: Initial Scan
+## Pass 1: Document System
 
-### Technology Detection
+### Automated Tech Stack Detection
+
+**Run Script First**:
+```bash
+# Execute automated analysis
+.specify/scripts/bash/analyze-codebase.sh --json > codebase-scan.json
+
+# Review JSON output for:
+# - framework: detected framework name
+# - version: detected version
+# - dependencies: key dependencies list
+# - file_counts: breakdown by file type
+# - confidence: high|medium|low
+```
+
+### Manual Technology Detection (if script unavailable)
 
 #### JavaScript/TypeScript
 - [ ] `package.json`? Dependencies: ___
@@ -121,21 +145,68 @@ Do NOT guess. Mark uncertainties clearly.
 #### Low Confidence / Needs Clarification ❓
 1. [Hypothesis needing owner confirmation]
 
+### Integration Strategy Template
+
+**Approach**: [Incremental / Big Bang / Strangler Fig / Parallel Run]
+
+**Migration Phases**:
+1. **Phase 1**: [Initial integration point]
+   - Confidence: [High/Med/Low]
+   - Risk: [Low/Medium/High]
+   - Estimated effort: [hours/days/weeks]
+
+2. **Phase 2**: [Next integration point]
+   - Confidence: [High/Med/Low]
+   - Risk: [Low/Medium/High]
+   - Estimated effort: [hours/days/weeks]
+
+**Data Migration**:
+- [ ] Schema compatibility: [Compatible / Needs transformation / Incompatible]
+- [ ] Data volume: [Small <1GB / Medium 1-100GB / Large >100GB]
+- [ ] Migration strategy: [One-time / Incremental / Dual-write]
+
+**Testing Strategy**:
+- [ ] Unit tests exist? Coverage: ___%
+- [ ] Integration tests exist? Coverage: ___%
+- [ ] E2E tests exist? Coverage: ___%
+- [ ] Recommended: [Specific test additions based on risk areas]
+
 ### Recommendations
-**Critical**: [High confidence + high impact]  
-**High Priority**: [Med-high combinations]  
-**Medium Priority**: [Lower combinations]
+**Critical** (High confidence + high impact):  
+1. [Finding with evidence from all 4 passes]
+
+**High Priority** (Med-high combinations):  
+1. [Finding from 2-3 passes]
+
+**Medium Priority** (Lower combinations):  
+1. [Finding from 1-2 passes]
 
 ### Questions for Owner
 1. [Architecture decision clarification]
 2. [Technology choice rationale]
+3. [Historical context questions]
 
 ---
 
-**Confidence Scoring**:
-- **High** (90-100%): Evidence from all 3 passes
-- **Medium** (60-89%): Evidence from 2 passes  
-- **Low** (30-59%): Evidence from 1 pass only
-- **Uncertain** (<30%): No clear evidence
+## Confidence Level Reference
 
-*See `.specify/templates/brownfield-analysis.md` for full workflow.*
+**High (90%+)**:
+- Multiple confirming indicators (package.json + lock file + node_modules)
+- Official documentation validated via web research
+- Code inspection confirms framework usage patterns
+- Git history shows consistent technology use
+
+**Medium (60-90%)**:
+- Some indicators present (package.json but no lock file)
+- Partial validation (docs found but version unclear)
+- Code patterns suggest framework but not definitive
+
+**Low (<60%)**:
+- Single indicator only (package.json exists)
+- No validation possible (offline, docs unavailable)
+- Educated guess based on file naming conventions
+- Requires owner confirmation
+
+---
+
+*Based on BMAD Method research - see specs/005-spec-kit-enhanced/research.md for methodology details*

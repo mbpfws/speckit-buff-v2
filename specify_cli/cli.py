@@ -21,11 +21,14 @@ def main(ctx):
 
 
 # Import commands
-from specify_cli.commands.init import init
-from specify_cli.commands.check import check
-
-main.add_command(init)
-main.add_command(check)
+# Note: init command is in __init__.py for backward compatibility
+# Import check command from new modular structure
+try:
+    from specify_cli.commands.check import app as check_app
+    main.add_command(check_app, name="check")
+except ImportError:
+    # Fallback if commands module not available
+    pass
 
 
 if __name__ == "__main__":

@@ -1,16 +1,21 @@
 ---
 description: Execute the implementation planning workflow using the plan template to generate design artifacts.
+architecture_research: true  # NEW in v2.0: Uses architecture-meta-template.md
 scripts:
   sh: scripts/bash/setup-plan.sh --json
   ps: scripts/powershell/setup-plan.ps1 -Json
+  detect_framework: scripts/bash/detect-framework.sh --json  # NEW in v2.0
 orchestration:
   pre_conditions: ["clarifications_recorded"]
-  auto_trigger: ["research-domains"]
+  auto_trigger: ["research-domains", "detect-framework"]  # NEW: detect-framework
   conditional_chains:
     - condition: "multi_domain == true"
       workflow: "research-integrations"
       reason: "Multi-domain architecture requires integration research"
-  post_conditions: ["plan_generated"]
+    - condition: "framework_detected == true"  # NEW in v2.0
+      action: "research_official_docs"
+      reason: "Framework detected, research latest patterns from official docs"
+  post_conditions: ["plan_generated", "architecture_researched"]  # NEW: architecture_researched
   next: "tasks"
 ---
 
