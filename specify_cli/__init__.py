@@ -24,6 +24,8 @@ Or install globally:
     specify init --here
 """
 
+__version__ = "2.0.0"
+
 import os
 import subprocess
 import sys
