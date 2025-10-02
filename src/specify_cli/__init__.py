@@ -24,6 +24,8 @@ Or install globally:
     specify init --here
 """
 
+__version__ = "2.0.0"
+
 import os
 import subprocess
 import sys
@@ -66,8 +68,8 @@ def _github_auth_headers(cli_token: str | None = None) -> dict:
 
 # Constants
 # Repository configuration for template distribution
-REPO_OWNER = "MikeBirdTech"  # Default owner (can be overridden)
-REPO_NAME = "spec-kit"       # Default repo name
+REPO_OWNER = "mbpfws"           # Spec-Kit Enhanced Fork owner
+REPO_NAME = "speckit-buff-v2"   # Spec-Kit Enhanced Fork repo
 
 AI_CHOICES = {
     "copilot": "GitHub Copilot",
