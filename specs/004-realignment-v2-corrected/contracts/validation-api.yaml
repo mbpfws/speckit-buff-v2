@@ -1,0 +1,416 @@
+# Validation Script API Contract
+# Feature: 003-based-on-the
+# Contract Version: 1.0.0
+
+api:
+  name: Validation Script Interface
+  description: Standard interface for all validation scripts (bash and PowerShell)
+  purpose: Ensure consistent validation output parseable by agents and CLI
+
+# ============================================================================
+# Standard Input/Output Interface
+# ============================================================================
+
+invocation:
+  bash:
+    command: bash .specify/scripts/bash/{script_name}.sh
+    example: bash .specify/scripts/bash/validate-structure.sh specs/003-based-on-the/
+  
+  powershell:
+    command: powershell -File .specify/scripts/powershell/{script_name}.ps1
+    example: powershell -File .specify/scripts/powershell/validate-structure.ps1 specs/003-based-on-the/
+
+arguments:
+  - position: 1
+    name: target_path
+    type: string
+    required: true
+    description: Path to validate (file, directory, or project root)
+    examples:
+      - "."
+      - "specs/003-based-on-the/"
+      - "specs/003-based-on-the/spec.md"
+  
+  - position: 2
+    name: options
+    type: string
+    required: false
+    description: Optional flags (--verbose, --json, etc.)
+    examples:
+      - "--verbose"
+      - "--json"
+      - "--fix"
+
+exit_codes:
+  philosophy: Non-blocking - always exit 0 to preserve agent autonomy
+  codes:
+    0: Success - validation complete (regardless of findings)
+    # Never use non-zero exit codes for validation findings
+    # All issues reported via STDOUT messages
+
+output_format:
+  stdout:
+    structure: Line-based messages with structured format
+    pattern: "[LEVEL] message"
+    levels:
+      INFO: Informational message (validation passed, check complete)
+      WARN: Warning about potential issue (non-critical)
+      ERROR: Error found (critical issue requiring attention)
+    
+    extended_pattern: "[LEVEL] file:line - message (suggestion: fix)"
+    components:
+      level: Required - INFO, WARN, or ERROR
+      file: Optional - relative path to file with issue
+      line: Optional - line number where issue found
+      message: Required - human-readable description
+      suggestion: Optional - recommended fix in parentheses
+    
+    examples:
+      - "[INFO] Structure validation complete"
+      - "[INFO] Checked 5 artifacts in specs/003-based-on-the/"
+      - "[WARN] specs/003-based-on-the/plan.md:5 - Missing optional field: version"
+      - "[ERROR] specs/004-feature/ - Missing required file: spec.md"
+      - "[WARN] Task numbering gap detected: T001, T003 (suggestion: add T002 or renumber)"
+  
+  stderr:
+    usage: Only for script execution errors (not validation findings)
+    examples:
+      - "Error: Missing required argument: target_path"
+      - "Error: Cannot read file: permission denied"
+      - "Error: Invalid YAML syntax in .specify/config.yaml"
+
+# ============================================================================
+# Validation Script: validate-structure.sh / validate-structure.ps1
+# ============================================================================
+
+validate_structure:
+  purpose: Verify project and artifact directory structure
+  
+  checks:
+    - name: .specify directory structure
+      validation:
+        - .specify/templates/ exists and is readable
+        - .specify/scripts/ exists with bash/ and powershell/ subdirectories
+        - .specify/config.yaml exists and is valid YAML
+        - .specify/.version file exists
+      output:
+        pass: "[INFO] .specify/ directory structure correct"
+        fail: "[ERROR] .specify/{path} - Required directory/file missing"
+    
+    - name: specs directory structure
+      validation:
+        - specs/ directory exists
+        - Feature folders match pattern {id}-{slug}
+        - Each feature folder has spec.md at minimum
+      output:
+        pass: "[INFO] specs/ directory structure valid"
+        fail: "[ERROR] specs/{folder} - Does not match naming pattern"
+    
+    - name: artifact file presence
+      validation:
+        - spec.md exists in each feature folder
+        - plan.md exists if tasks.md exists (dependency)
+        - contracts/ directory exists if plan.md exists
+      output:
+        pass: "[INFO] Required artifact files present"
+        fail: "[ERROR] {folder} - Missing required file: {file}"
+        warn: "[WARN] {folder} - Missing optional file: {file}"
+  
+  execution:
+    target_types:
+      project_root: Check entire project structure
+      feature_folder: Check specific feature artifacts
+      single_file: Skip (structure validation requires directory)
+  
+  output_example: |
+    [INFO] Validating structure: specs/003-based-on-the/
+    [INFO] .specify/ directory structure correct
+    [INFO] specs/ directory structure valid
+    [INFO] Feature folder naming: PASS
+    [INFO] Required artifact files present
+    [WARN] specs/003-based-on-the/ - Missing optional file: research.md
+    [INFO] Structure validation complete
+
+# ============================================================================
+# Validation Script: validate-naming.sh / validate-naming.ps1
+# ============================================================================
+
+validate_naming:
+  purpose: Verify naming conventions for folders, files, and identifiers
+  
+  checks:
+    - name: feature folder naming
+      pattern: "{id}-{slug}"
+      rules:
+        - id must be 3-digit zero-padded integer (001-999)
+        - slug must match [a-z0-9-]+ (lowercase letters, numbers, hyphens)
+        - no spaces or special characters
+      examples:
+        valid: ["003-based-on-the", "001-improve-spec-kit", "042-new-feature"]
+        invalid: ["3-feature", "Feature-Name", "001_feature", "001 feature"]
+      output:
+        pass: "[INFO] Feature folder naming: PASS"
+        fail: "[ERROR] specs/{folder} - Naming does not match pattern {id}-{slug}"
+    
+    - name: artifact file naming
+      rules:
+        - spec.md, plan.md, tasks.md (lowercase, no variations)
+        - research.md, data-model.md, quickstart.md (kebab-case)
+        - contracts/ directory (lowercase)
+      examples:
+        valid: ["spec.md", "plan.md", "data-model.md"]
+        invalid: ["Spec.md", "PLAN.MD", "dataModel.md", "data_model.md"]
+      output:
+        pass: "[INFO] Artifact file naming: PASS"
+        fail: "[ERROR] {file} - Filename should be lowercase with hyphens"
+    
+    - name: feature ID consistency
+      validation:
+        - Folder ID matches frontmatter feature_id
+        - ID is unique across all features
+      output:
+        pass: "[INFO] Feature ID consistency: PASS"
+        fail: "[ERROR] {folder}/spec.md - feature_id mismatch (folder: {id1}, frontmatter: {id2})"
+        warn: "[WARN] Duplicate feature ID detected: {id} in {folder1} and {folder2}"
+  
+  output_example: |
+    [INFO] Validating naming: specs/003-based-on-the/
+    [INFO] Feature folder naming: PASS
+    [INFO] Artifact file naming: PASS
+    [INFO] Feature ID consistency: PASS
+    [INFO] Naming validation complete
+
+# ============================================================================
+# Validation Script: validate-frontmatter.sh / validate-frontmatter.ps1
+# ============================================================================
+
+validate_frontmatter:
+  purpose: Parse and validate YAML frontmatter in artifact files
+  
+  checks:
+    - name: frontmatter presence
+      validation:
+        - Frontmatter exists at start of file
+        - Enclosed in triple-dash delimiters (---)
+        - Valid YAML syntax
+      output:
+        pass: "[INFO] Frontmatter present and parseable"
+        fail: "[ERROR] {file} - Missing or invalid YAML frontmatter"
+    
+    - name: required fields
+      fields:
+        - feature_id (integer, 1-999)
+        - created (ISO 8601 date: YYYY-MM-DD)
+        - status (enum: draft, active, complete, archived)
+      output:
+        pass: "[INFO] Required frontmatter fields present"
+        fail: "[ERROR] {file}:frontmatter - Missing required field: {field}"
+    
+    - name: optional fields
+      fields:
+        - parent_spec (string, relative path)
+        - version (string, semver)
+        - branch (string, git branch name)
+      output:
+        pass: "[INFO] Optional frontmatter fields valid"
+        warn: "[WARN] {file}:frontmatter - Missing optional field: {field}"
+    
+    - name: field validation
+      rules:
+        - feature_id: Must match folder ID
+        - created: Must be valid date (not future)
+        - status: Must be from allowed enum
+        - parent_spec: Must resolve to existing file if specified
+      output:
+        pass: "[INFO] Frontmatter field validation: PASS"
+        fail: "[ERROR] {file}:frontmatter - Invalid {field}: {reason}"
+    
+    - name: parent references
+      validation:
+        - If parent_spec specified, target file must exist
+        - Circular references detected and reported
+      output:
+        pass: "[INFO] Parent references resolve correctly"
+        fail: "[ERROR] {file}:frontmatter - parent_spec points to non-existent file: {path}"
+        warn: "[WARN] Circular reference detected: {file1} → {file2} → {file1}"
+  
+  output_example: |
+    [INFO] Validating frontmatter: specs/003-based-on-the/spec.md
+    [INFO] Frontmatter present and parseable
+    [INFO] Required frontmatter fields present
+    [WARN] Missing optional field: version
+    [INFO] Frontmatter field validation: PASS
+    [INFO] Frontmatter validation complete
+
+# ============================================================================
+# Implementation Requirements
+# ============================================================================
+
+implementation:
+  bash:
+    shebang: "#!/bin/bash"
+    requirements:
+      - Use set -e for error propagation (within functions)
+      - Parse YAML using grep/sed or yq if available
+      - Output to STDOUT only (no STDERR for validation findings)
+      - Always exit 0 for validation results
+    
+    structure: |
+      #!/bin/bash
+      # validate-{name}.sh
+      
+      TARGET_PATH="${1:-.}"
+      
+      # Validation functions
+      check_something() {
+        if [condition]; then
+          echo "[INFO] Check passed"
+        else
+          echo "[ERROR] Check failed"
+        fi
+      }
+      
+      # Main execution
+      echo "[INFO] Validating {aspect}: $TARGET_PATH"
+      check_something
+      echo "[INFO] Validation complete"
+      exit 0
+  
+  powershell:
+    requirements:
+      - Use param() for argument parsing
+      - Handle paths with spaces correctly
+      - Output to STDOUT (Write-Output)
+      - Use Write-Host for colored output (optional)
+      - Always exit 0 for validation results
+    
+    structure: |
+      # validate-{name}.ps1
+      param(
+        [string]$TargetPath = "."
+      )
+      
+      # Validation functions
+      function Check-Something {
+        if (condition) {
+          Write-Output "[INFO] Check passed"
+        } else {
+          Write-Output "[ERROR] Check failed"
+        }
+      }
+      
+      # Main execution
+      Write-Output "[INFO] Validating {aspect}: $TargetPath"
+      Check-Something
+      Write-Output "[INFO] Validation complete"
+      exit 0
+
+  cross_platform:
+    parity: Bash and PowerShell scripts must produce identical output
+    testing: Run both scripts on same input, compare outputs
+    maintenance: Update both scripts for any changes
+
+# ============================================================================
+# Agent Integration
+# ============================================================================
+
+agent_usage:
+  execution:
+    - Agents execute scripts at integration points (post-artifact creation)
+    - Agents parse output line-by-line using regex: `\[(INFO|WARN|ERROR)\] (.+)`
+    - Agents categorize messages by level
+  
+  reporting:
+    - Agents summarize validation results to user
+    - Agents highlight ERRORS and critical WARNINGS
+    - Agents suggest fixes based on suggestion hints
+    - Agents ask user for decision on how to proceed
+  
+  example_agent_workflow: |
+    1. Agent creates artifact (e.g., spec.md)
+    2. Agent runs: bash .specify/scripts/bash/validate-frontmatter.sh specs/003.../spec.md
+    3. Agent parses output:
+       - [INFO] messages → validation passed
+       - [WARN] messages → potential issues
+       - [ERROR] messages → critical problems
+    4. Agent reports to user:
+       "Validation complete: 3 info, 1 warning, 0 errors
+        Warning: Missing optional field 'version' in frontmatter
+        Recommendation: Add version field or proceed without it
+        How would you like to proceed?"
+    5. User decides: fix or proceed
+    6. Agent implements user's decision
+
+# ============================================================================
+# Testing Contracts
+# ============================================================================
+
+testing:
+  contract_tests:
+    - test_validate_structure_valid:
+        input: Valid project structure
+        command: bash validate-structure.sh .
+        expected_output:
+          - Contains "[INFO] Structure validation complete"
+          - No [ERROR] messages
+          - Exit code 0
+    
+    - test_validate_structure_missing_file:
+        input: Project missing spec.md
+        command: bash validate-structure.sh specs/004-feature/
+        expected_output:
+          - Contains "[ERROR] specs/004-feature/ - Missing required file: spec.md"
+          - Exit code 0 (non-blocking)
+    
+    - test_validate_naming_valid:
+        input: Properly named feature folder
+        command: bash validate-naming.sh specs/003-based-on-the/
+        expected_output:
+          - Contains "[INFO] Naming validation complete"
+          - No [ERROR] messages
+          - Exit code 0
+    
+    - test_validate_naming_invalid:
+        input: Improperly named folder (3-feature)
+        command: bash validate-naming.sh specs/3-feature/
+        expected_output:
+          - Contains "[ERROR] specs/3-feature/ - Naming does not match pattern"
+          - Exit code 0 (non-blocking)
+    
+    - test_validate_frontmatter_valid:
+        input: Artifact with valid frontmatter
+        command: bash validate-frontmatter.sh specs/003-based-on-the/spec.md
+        expected_output:
+          - Contains "[INFO] Frontmatter validation complete"
+          - No [ERROR] messages
+          - Exit code 0
+    
+    - test_validate_frontmatter_missing_field:
+        input: Artifact missing required field
+        command: bash validate-frontmatter.sh specs/004-feature/spec.md
+        expected_output:
+          - Contains "[ERROR] Missing required field: feature_id"
+          - Exit code 0 (non-blocking)
+    
+    - test_cross_platform_parity:
+        input: Same project structure
+        commands:
+          - bash validate-structure.sh .
+          - powershell -File validate-structure.ps1 .
+        expected_output:
+          - Outputs are functionally identical
+          - Message counts match (INFO, WARN, ERROR)
+          - Both exit code 0
+
+# ============================================================================
+# Compliance
+# ============================================================================
+
+compliance:
+  - FR-029: Naming conventions enforced through scripts ✓
+  - FR-030: YAML frontmatter with minimal metadata ✓
+  - FR-031: Non-blocking warnings provided ✓
+  - FR-032: Artifact relationships via frontmatter ✓
+  - FR-033: Shell/bash scripts for validation ✓
+  - FR-041: Cross-platform scripts (bash + PowerShell) ✓
+  - FR-045: Actionable guidance with user override ✓

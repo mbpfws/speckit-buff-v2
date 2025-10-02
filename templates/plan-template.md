@@ -1,8 +1,22 @@
+---
+description: "Implementation plan template for feature development"
+version: "2.0.0"
+scripts:
+  sh: .specify/scripts/bash/update-agent-context.sh __AGENT__
+  ps: .specify/scripts/powershell/update-agent-context.ps1 -AgentType __AGENT__
+---
 
 # Implementation Plan: [FEATURE]
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]  
+**Input**: Feature specification from `specs/[###-feature-name]/spec.md`
+
+<!-- 
+AGENT GUIDANCE (v2.0):
+This template is self-executing. Follow the Execution Flow step-by-step.
+Load constitution from .specify/memory/constitution.md before Phase 0.
+Generate artifacts in specs/[###-feature-name]/ directory.
+-->
 
 ## Execution Flow (/plan command scope)
 ```
@@ -64,49 +78,37 @@ specs/[###-feature]/
 
 ### Source Code (repository root)
 <!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
+  ACTION REQUIRED: Research framework-specific architecture patterns using architecture-meta-template.md
+  
+  DO NOT use embedded folder structures. Instead:
+  1. Run detect-framework.sh to identify framework
+  2. Research official documentation for latest patterns
+  3. Document findings with "According to [URL]" citations
+  4. Report any deviations from official patterns
+  
+  See .specify/templates/architecture-meta-template.md for research workflow.
 -->
-```
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
 
-tests/
-├── contract/
-├── integration/
-└── unit/
+**Framework Detection**:
+```bash
+# Run automated detection
+.specify/scripts/bash/detect-framework.sh --json
 
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+# Output will show: framework, version, confidence
+# Use this to guide research
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Architecture Research Required**:
+- [ ] Detect framework via script or manual inspection
+- [ ] Research official documentation for [Framework Version]
+- [ ] Document recommended folder structure with citations
+- [ ] Identify key patterns (e.g., Next.js route groups, Django apps)
+- [ ] Note anti-patterns to avoid
+- [ ] Report project deviations from official patterns
+
+**Research Template**: See `.specify/templates/architecture-meta-template.md`
+
+**Structure Decision**: [After research, document actual project structure here with citations from official docs]
 
 ## Phase 0: Outline & Research
 1. **Extract unknowns from Technical Context** above:
@@ -152,7 +154,7 @@ directories captured above]
    - Quickstart test = story validation steps
 
 5. **Update agent file incrementally** (O(1) operation):
-   - Run `.specify/scripts/bash/update-agent-context.sh windsurf`
+   - Run `{SCRIPT}`
      **IMPORTANT**: Execute it exactly as specified above. Do not add or remove any arguments.
    - If exists: Add only NEW tech from current plan
    - Preserve manual additions between markers

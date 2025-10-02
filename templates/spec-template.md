@@ -4,17 +4,21 @@ title: "Feature Name"
 status: "draft"
 created: "YYYY-MM-DD"
 version: "1.0"
+complexity_tier: "intermediate"  # Options: novice, intermediate, expert
 ---
 
 # Feature Specification: [FEATURE NAME]
 
+**Input**: User description: "$ARGUMENTS"
+
 <!-- 
-AGENT GUIDANCE:
-- This template guides you through creating a complete feature specification
-- Focus on WHAT and WHY, not HOW
-- Mark ambiguities with [NEEDS CLARIFICATION: question]
-- Remove irrelevant sections entirely
-- Ensure all requirements are testable
+AGENT GUIDANCE (v2.0):
+- This template is designed for AI agents using Spec-Kit v2.0
+- Focus on WHAT and WHY, not HOW (no tech stack or implementation details)
+- Mark ALL ambiguities with [NEEDS CLARIFICATION: specific question]
+- Remove sections that don't apply (don't leave empty or "N/A")
+- Ensure requirements are testable and unambiguous
+- Complexity tier from frontmatter determines guidance level (novice/intermediate/expert)
 -->
 
 ## Execution Flow (main)
@@ -61,6 +65,30 @@ When creating this spec from a user prompt:
    - Error handling behaviors
    - Integration requirements
    - Security/compliance needs
+
+### Complexity Tier Guidance
+<!-- IF tier=novice -->
+**Novice Tier**: Provide detailed explanations for all sections. Include:
+- Step-by-step guidance for writing requirements
+- Examples for each requirement type
+- Common pitfalls to avoid
+- Links to learning resources for unfamiliar concepts
+- Detailed acceptance criteria templates
+<!-- ENDIF -->
+
+<!-- IF tier=intermediate -->
+**Intermediate Tier**: Balanced guidance with examples where helpful. Include:
+- Key requirement patterns
+- Common edge cases to consider
+- Brief examples for complex scenarios
+<!-- ENDIF -->
+
+<!-- IF tier=expert -->
+**Expert Tier**: Minimal guidance, assume familiarity with spec-driven development. Focus on:
+- Constitutional compliance reminders
+- Cross-reference validation
+- Complexity tracking requirements
+<!-- ENDIF -->
 
 ---
 

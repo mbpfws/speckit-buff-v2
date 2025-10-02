@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(git checkout:*)",
+      "Bash(.specify/scripts/bash/setup-plan.sh:*)",
+      "mcp__tavily-expert__tavily_search_tool",
+      "mcp__deepwiki__read_wiki_contents",
+      "mcp__deepwiki__read_wiki_structure",
+      "mcp__deepwiki__ask_question",
+      "Bash(./scripts/bash/setup-plan.sh:*)",
+      "SlashCommand(/tasks)",
+      "Bash(bash:*)",
+      "Bash(./.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(python:*)",
+      "Bash(timeout:*)",
+      "Bash(.:*)",
+      "WebSearch",
+      "Bash(cp:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

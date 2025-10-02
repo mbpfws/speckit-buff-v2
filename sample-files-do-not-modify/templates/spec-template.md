@@ -1,21 +1,9 @@
----
-feature_id: "XXX"
-title: "Feature Name"
-status: "draft"
-created: "YYYY-MM-DD"
-version: "1.0"
----
-
 # Feature Specification: [FEATURE NAME]
 
-<!-- 
-AGENT GUIDANCE:
-- This template guides you through creating a complete feature specification
-- Focus on WHAT and WHY, not HOW
-- Mark ambiguities with [NEEDS CLARIFICATION: question]
-- Remove irrelevant sections entirely
-- Ensure all requirements are testable
--->
+**Feature Branch**: `[###-feature-name]`  
+**Created**: [DATE]  
+**Status**: Draft  
+**Input**: User description: "$ARGUMENTS"
 
 ## Execution Flow (main)
 ```
