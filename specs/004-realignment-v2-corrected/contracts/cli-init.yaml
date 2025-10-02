@@ -1,0 +1,289 @@
+# CLI Init Command Contract
+# Feature: 003-based-on-the
+# Contract Version: 1.0.0
+
+command:
+  name: init
+  description: Initialize project with spec-kit templates and directory structure
+  
+arguments:
+  - name: project_path
+    type: string
+    required: false
+    default: "."
+    description: Path to initialize project (defaults to current directory)
+    validation:
+      - must_be_valid_path: true
+      - must_be_writable: true
+
+options:
+  - name: template-version
+    type: string
+    required: false
+    default: "latest"
+    description: Template version to download from GitHub Releases
+    validation:
+      - must_match_semver: true
+      - or_equals: "latest"
+    examples:
+      - "latest"
+      - "v2.0.0"
+      - "v2.1.3"
+  
+  - name: force
+    type: boolean
+    required: false
+    default: false
+    description: Overwrite existing .specify/ directory if present
+    flags: ["-f", "--force"]
+  
+  - name: offline
+    type: boolean
+    required: false
+    default: false
+    description: Use cached templates without checking for updates
+    flags: ["--offline"]
+  
+  - name: minimal
+    type: boolean
+    required: false
+    default: false
+    description: Install only essential templates (spec, plan, tasks)
+    flags: ["--minimal"]
+
+behavior:
+  preconditions:
+    - project_path must exist or be creatable
+    - if .specify/ exists and --force not set, must exit with error
+    - if --offline set, cached templates must exist in ~/.specify/cache/
+    - network connection required unless --offline set
+  
+  execution_steps:
+    - step: 1
+      action: Validate arguments and options
+      error_handling: Exit with code 1 if validation fails
+    
+    - step: 2
+      action: Check if .specify/ directory already exists
+      conditions:
+        - if_exists_and_no_force: Exit with error message
+        - if_exists_and_force: Backup existing to .specify.backup/
+    
+    - step: 3
+      action: Determine template source
+      conditions:
+        - if_offline: Use ~/.specify/cache/{template_version}/
+        - if_online: Download from GitHub Releases
+      error_handling: Exit with code 1 if download fails
+    
+    - step: 4
+      action: Download templates from GitHub Releases
+      url_pattern: "https://github.com/{org}/{repo}/releases/download/{version}/templates.tar.gz"
+      cache_location: "~/.specify/cache/{template_version}/"
+      skip_if: --offline flag set
+      error_handling: Exit with code 1 on network/download failure
+    
+    - step: 5
+      action: Extract templates to .specify/templates/
+      includes:
+        minimal:
+          - spec-template.md
+          - plan-template.md
+          - tasks-template.md
+          - constitution.md
+        full:
+          - all minimal templates
+          - brownfield-analysis.md
+          - architecture-patterns.md
+          - quality-checklist.md
+    
+    - step: 6
+      action: Copy validation scripts to .specify/scripts/
+      includes:
+        - bash/validate-structure.sh
+        - bash/validate-naming.sh
+        - bash/validate-frontmatter.sh
+        - powershell/validate-structure.ps1
+        - powershell/validate-naming.ps1
+        - powershell/validate-frontmatter.ps1
+      permissions: Make bash scripts executable (chmod +x)
+    
+    - step: 7
+      action: Create default .specify/config.yaml
+      content: |
+        template_source: https://github.com/specify-fork/templates/releases
+        template_version: {downloaded_version}
+        validation:
+          skip_checks: []
+          fail_on_error: false
+        quality:
+          tools: []
+          auto_fix: false
+        offline_mode: false
+    
+    - step: 8
+      action: Create specs/ directory if not exists
+      permissions: Ensure writable
+    
+    - step: 9
+      action: Create .specify/.version file
+      content: "{downloaded_version}"
+    
+    - step: 10
+      action: Create platform-specific workflow file
+      detection: Detect AI platform from environment
+      files:
+        - .specify/workflows/WINDSURF.md (for Windsurf)
+        - .specify/workflows/CLAUDE.md (for Claude Code)
+        - .specify/workflows/AGENTS.md (generic fallback)
+
+  postconditions:
+    - .specify/templates/ directory exists with templates
+    - .specify/scripts/ directory exists with validation scripts
+    - .specify/config.yaml exists with valid configuration
+    - specs/ directory exists and is writable
+    - .specify/.version file contains template version string
+    - Platform-specific workflow file created
+
+output:
+  success:
+    exit_code: 0
+    stdout: |
+      ✓ Templates downloaded (version {version})
+      ✓ Validation scripts installed
+      ✓ Configuration created
+      ✓ Project structure initialized
+      
+      Next steps:
+      1. Run: specify /specify "your feature description"
+      2. Or: Create spec manually in specs/001-feature-name/spec.md
+    format: human_readable_text
+  
+  error_cases:
+    - condition: .specify/ exists without --force
+      exit_code: 1
+      stderr: |
+        Error: .specify/ directory already exists
+        Use --force to overwrite or remove manually
+    
+    - condition: Network error during download
+      exit_code: 1
+      stderr: |
+        Error: Failed to download templates from GitHub
+        Check network connection or use --offline with cached templates
+    
+    - condition: Invalid template version
+      exit_code: 1
+      stderr: |
+        Error: Template version '{version}' not found
+        Available versions: {list_from_github_api}
+    
+    - condition: Insufficient permissions
+      exit_code: 1
+      stderr: |
+        Error: Cannot write to {path}
+        Check directory permissions
+    
+    - condition: Offline mode but no cache
+      exit_code: 1
+      stderr: |
+        Error: --offline specified but no cached templates found
+        Run without --offline first to download templates
+
+performance:
+  target_execution_time: <3s
+  constraints:
+    - Download size: ~500KB for minimal, ~1MB for full templates
+    - Network timeout: 30s for GitHub API/download
+    - Disk space required: ~2MB including cache
+  
+  optimization:
+    - Cache downloaded templates in ~/.specify/cache/
+    - Resume interrupted downloads if supported
+    - Use GitHub API to check version before download
+
+testing:
+  contract_tests:
+    - test_init_empty_directory:
+        given: Empty directory
+        when: specify init
+        then: All structures created successfully
+        assert:
+          - .specify/templates/ exists
+          - .specify/scripts/ exists
+          - specs/ exists
+    
+    - test_init_with_existing_specify:
+        given: Directory with existing .specify/
+        when: specify init (without --force)
+        then: Error with code 1
+        assert:
+          - Existing .specify/ unchanged
+          - Error message displayed
+    
+    - test_init_with_force:
+        given: Directory with existing .specify/
+        when: specify init --force
+        then: Success with backup created
+        assert:
+          - .specify.backup/ contains old files
+          - .specify/ has new templates
+    
+    - test_init_specific_version:
+        given: Empty directory
+        when: specify init --template-version v2.0.0
+        then: Specific version downloaded
+        assert:
+          - .specify/.version contains "v2.0.0"
+          - Templates match v2.0.0 release
+    
+    - test_init_offline_mode:
+        given: Cached templates exist
+        when: specify init --offline
+        then: Uses cached templates
+        assert:
+          - No network requests made
+          - Templates from cache
+    
+    - test_init_offline_no_cache:
+        given: No cached templates
+        when: specify init --offline
+        then: Error with code 1
+        assert:
+          - Error message about missing cache
+    
+    - test_init_minimal:
+        given: Empty directory
+        when: specify init --minimal
+        then: Only essential templates installed
+        assert:
+          - Has spec, plan, tasks, constitution templates
+          - Missing brownfield, architecture templates
+
+dependencies:
+  external:
+    - GitHub Releases API (unless --offline)
+    - Internet connection (unless --offline)
+    - File system write permissions
+  
+  internal:
+    - template_loader module
+    - config writer module
+
+backward_compatibility:
+  - Must not break existing .specify/ structures from v1.x
+  - Must detect and migrate old template versions
+  - Must preserve custom user modifications in .specify/
+
+security:
+  - Validate downloaded templates are from trusted source (HTTPS)
+  - Verify tar.gz integrity if checksums provided
+  - Do not execute downloaded scripts automatically
+  - Respect file permissions on Unix systems
+  
+compliance:
+  - FR-001: CLI provides init command ✓
+  - FR-003: Downloads templates from GitHub releases ✓
+  - FR-004: Supports both installation methods (uv tool / uvx) ✓
+  - FR-005: Minimal dependencies (requests for download, PyYAML for config) ✓
+  - Performance: <3s init time (per spec requirements) ✓

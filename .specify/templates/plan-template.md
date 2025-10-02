@@ -47,52 +47,7 @@
 ## Constitution Check
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-### I. Cross-Platform Compatibility
-- [ ] Feature works across all 10 supported platforms (Claude Code, GitHub Copilot, Gemini CLI, Cursor, Qwen Code, opencode, Windsurf, Kilo Code, Auggie CLI, Roo Code)
-- [ ] Uses each platform's native command definitions and execution patterns
-- [ ] No platform-specific dependencies or assumptions
-- [ ] Commands provide consistent behavior across all platforms
-
-### II. Multi-Installation Support
-- [ ] Supports both persistent installation (PATH) and one-time usage (uvx)
-- [ ] Does not assume or depend on specific installation method
-- [ ] Works equally well in both deployment scenarios
-- [ ] Installation method is transparent to end users
-
-### III. Architecture-First Development
-- [ ] Comprehensive system architecture planning completed
-- [ ] Technology stack interoperability analysis conducted
-- [ ] Library/SDK compatibility validated across all platforms
-- [ ] Real-world scenario contingency plans created
-- [ ] Implementation follows architectural design
-
-### IV. Template-Driven Consistency
-- [ ] Preserves and extends existing template system
-- [ ] Bash/PowerShell automation works across platforms
-- [ ] Template files maintain consistent structure
-- [ ] Commands follow established patterns
-- [ ] Governance rules remain platform-agnostic
-- [ ] Constitution remains single source of truth
-
-### V. Synchronicity Enforcement
-- [ ] Changes propagate automatically across related files
-- [ ] Platform-specific files (.claude/, .roo/, etc.) stay synchronized
-- [ ] Template modifications reflect in all instantiated copies
-- [ ] Single change triggers updates to all dependent artifacts
-
-### VI. Agent-Native Execution
-- [ ] Automation is executable by all intended AI coding agents
-- [ ] Shell/bash commands are runnable by all 10 platforms
-- [ ] Git operations use platform-native workflows
-- [ ] MCP server tools follow cross-platform patterns
-- [ ] Features inject as commands/rules that agents execute natively
-
-### VII. Hierarchical Governance
-- [ ] Follows constitution as supreme governance document
-- [ ] Uses AGENTS.md for platform-specific guidelines
-- [ ] Maintains proper hierarchy: Constitution → AGENTS.md → Platform files
-- [ ] Template modifications follow governance structure
-- [ ] All changes respect hierarchical naming conventions
+[Gates determined based on constitution file]
 
 ## Project Structure
 
@@ -197,7 +152,7 @@ directories captured above]
    - Quickstart test = story validation steps
 
 5. **Update agent file incrementally** (O(1) operation):
-   - Run `.specify/scripts/bash/update-agent-context.sh claude`
+   - Run `.specify/scripts/bash/update-agent-context.sh windsurf`
      **IMPORTANT**: Execute it exactly as specified above. Do not add or remove any arguments.
    - If exists: Add only NEW tech from current plan
    - Preserve manual additions between markers

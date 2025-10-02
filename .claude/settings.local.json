@@ -10,7 +10,15 @@
       "mcp__deepwiki__ask_question",
       "Bash(./scripts/bash/setup-plan.sh:*)",
       "SlashCommand(/tasks)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(./.specify/scripts/bash/check-prerequisites.sh:*)",
+      "Bash(python:*)",
+      "Bash(timeout:*)",
+      "Bash(.:*)",
+      "WebSearch",
+      "Bash(cp:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

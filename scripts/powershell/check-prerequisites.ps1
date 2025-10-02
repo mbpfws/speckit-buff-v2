@@ -12,6 +12,7 @@
 #   -RequireTasks       Require tasks.md to exist (for implementation phase)
 #   -IncludeTasks       Include tasks.md in AVAILABLE_DOCS list
 #   -PathsOnly          Only output path variables (no validation)
+#   -ValidateTags       Scan for missing code tags and metadata (NEW in v2.0)
 #   -Help, -h           Show help message
 
 [CmdletBinding()]
@@ -20,6 +21,7 @@ param(
     [switch]$RequireTasks,
     [switch]$IncludeTasks,
     [switch]$PathsOnly,
+    [switch]$ValidateTags,
     [switch]$Help
 )
 

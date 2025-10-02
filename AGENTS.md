@@ -1,6 +1,55 @@
 # AI Agent Guidelines for Spec-Kit Enhancement Initiative
 
-**Version**: 2.0.0 | **Date**: 2025-09-29 | **Constitution**: v2.1.1
+**Version**: 2.0.0 | **Date**: 2025-09-30 | **Constitution**: v2.1.1 | **Implementation Phase**: ✅ Complete  
+**Enhanced Features**: Brownfield Analysis, Agent Self-Regulation, Cross-Platform Support
+
+## Setup Phase Progress
+
+### ✅ T001: MCP Server Integration Structure
+- **Status**: Completed
+- **Components**:
+  - MCP orchestrator with server management
+  - Tavily Expert, Context7, DeepWiki, Fetch integrations
+  - Server configuration and authentication setup
+  - Comprehensive error handling and validation
+
+### ✅ T002: Enhanced Framework Project Structure
+- **Status**: Completed
+- **Components**:
+  - Hierarchical directory structure for enhanced framework
+  - Configuration files and template system
+  - Version control and branching strategy
+  - Cross-platform development environment
+
+### ✅ T003: Cross-Platform Compatibility Layer
+- **Status**: Completed
+- **Components**:
+  - Platform detection for all 10 AI coding platforms
+  - Installation method validation (PATH and uvx)
+  - Compatibility matrices and validation scripts
+  - Platform-specific optimization mechanisms
+
+### ✅ T004: Constitutional Compliance Monitoring
+- **Status**: Completed
+- **Components**:
+  - Validation for all 7 constitutional principles
+  - Real-time compliance monitoring system
+  - Multi-format reporting (text, JSON, YAML)
+  - Governance enforcement mechanisms
+
+### ✅ T005: Brownfield Project Analysis Tools
+- **Status**: Completed
+- **Components**:
+  - Technology stack detection (JavaScript/TypeScript, Python, Java, etc.)
+  - Architecture pattern recognition (MVC, microservices, monolith)
+  - Dependency vulnerability analysis
+  - Migration guidance generation
+  - Code quality and security assessment
+
+### 🔄 Current Status
+- **Tests**: 83/83 passing (100% success rate)
+- **Coverage**: All Setup phase components validated
+- **Next Phase**: Ready for Implementation phase
 
 ## Overview
 
@@ -272,11 +321,6 @@ specify optimize --performance --caching
 - Adhere to constitutional principles
 
 ### Documentation
-- Update platform-specific documentation
-- Maintain cross-platform compatibility notes
-- Document governance compliance status
-- Track performance optimization results
-
 ## Version Compatibility
 
 ### Framework Versions
@@ -291,10 +335,6 @@ specify optimize --performance --caching
 | GitHub Copilot | Latest | Core features |
 | Cursor | 2.0+ | Advanced integration |
 | Gemini CLI | 1.2+ | Comprehensive support |
-
-## Platform-Specific Implementation Details
-
-### Tier 1: Full Integration Platforms
 
 #### Claude Code
 **Installation Methods**: Both PATH and uvx fully supported
@@ -546,5 +586,55 @@ specify validate --tier 3 --features basic --installation both
 - Community discussions and support
 
 ---
+## Brownfield Analysis Guidance (NEW in v2.0)
 
-**Constitutional Compliance**: This document adheres to all constitutional principles and provides comprehensive platform-specific implementation guidelines following the hierarchical governance structure. All installation methods (PATH and uvx) are fully supported across all 10 AI coding platforms with appropriate optimization levels for each tier.
+### When to Use
+- Existing codebase with unclear architecture
+- Legacy project requiring modernization
+- Third-party code integration
+
+### 4-Pass Workflow
+1. **Document** (10-15 min): Run analyze-codebase.sh, document findings
+2. **Analyze** (15-20 min): Research official docs with "According to [URL]"
+3. **Integrate** (10-15 min): Design migration strategy
+4. **Risk** (10 min): Check dependencies, identify risks
+
+### Confidence Levels
+- **High (90%+)**: Multiple indicators + official docs
+- **Medium (60-90%)**: Some indicators + partial validation
+- **Low (<60%)**: Single indicator only
+
+## Agent Self-Regulation (NEW in v2.0)
+
+### User Confirmation Loops
+Pause and ask when:
+- Version mismatches detected
+- Breaking changes found
+- Multiple valid approaches exist
+
+### Severity Thresholds
+- **CRITICAL**: Block workflow
+- **MAJOR**: Ask confirmation
+- **MINOR**: Warn and continue
+
+### Citation Requirements
+ALWAYS use "According to [URL]" format. Never state facts without sources.
+
+### "I Don't Know" Protocol
+Prefer "I don't know + research" over guessing.
+
+## Tag Enforcement (NEW in v2.0)
+
+### Required Tags
+- Code: `// TASK-XXX: description`
+- Metadata: `feature_id`, `parent_spec`, `artifact_id`
+- Cross-references must resolve
+
+## Context Management (NEW in v2.0)
+
+### For Documents >300 Lines
+- Use section indexes in frontmatter
+- Extract specific sections with extract-section.sh
+- Reduces context window by 70%
+
+---

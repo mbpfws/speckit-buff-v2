@@ -65,6 +65,10 @@ def _github_auth_headers(cli_token: str | None = None) -> dict:
     return {"Authorization": f"Bearer {token}"} if token else {}
 
 # Constants
+# Repository configuration for template distribution
+REPO_OWNER = "MikeBirdTech"  # Default owner (can be overridden)
+REPO_NAME = "spec-kit"       # Default repo name
+
 AI_CHOICES = {
     "copilot": "GitHub Copilot",
     "claude": "Claude Code",
@@ -81,6 +85,21 @@ AI_CHOICES = {
 # Add script type choices
 SCRIPT_TYPE_CHOICES = {"sh": "POSIX Shell (bash/zsh)", "ps": "PowerShell"}
 
+# Platform workflow directory mapping for workflow installation
+PLATFORM_WORKFLOW_DIRS = {
+    "claude": ".claude/commands",
+    "windsurf": ".windsurf/workflows",
+    "cursor": ".cursor/commands",
+    "copilot": ".github/copilot/commands",
+    "roo": ".roo/commands",
+    "gemini": ".gemini/commands",
+    "qwen": ".qwen/commands",
+    "opencode": ".opencode/commands",
+    "codex": ".codex/prompts",
+    "kilocode": ".kilocode/commands",
+    "auggie": ".augment/commands",
+}
+
 # Claude CLI local installation path after migrate-installer
 CLAUDE_LOCAL_PATH = Path.home() / ".claude" / "local" / "claude"
 
@@ -94,7 +113,7 @@ BANNER = """
 ╚══════╝╚═╝     ╚══════╝ ╚═════╝╚═╝╚═╝        ╚═╝   
 """
 
-TAGLINE = "GitHub Spec Kit - Spec-Driven Development Toolkit"
+TAGLINE = "Spec-Kit v2.2 - Conversational Spec-Driven Development"
 class StepTracker:
     """Track and render hierarchical steps without emojis, similar to Claude Code tree output.
     Supports live auto-refresh via an attached refresh callback.

@@ -1,0 +1,408 @@
+# CLI Check Command Contract
+# Feature: 003-based-on-the
+# Contract Version: 1.0.0
+
+command:
+  name: check
+  description: Verify project structure, run validation scripts, and optionally check quality tools
+  
+arguments:
+  - name: target_path
+    type: string
+    required: false
+    default: "."
+    description: Path to project or specific artifact to check
+    validation:
+      - must_be_valid_path: true
+      - must_be_readable: true
+    examples:
+      - "."
+      - "specs/003-based-on-the/"
+      - "specs/003-based-on-the/spec.md"
+
+options:
+  - name: quality
+    type: boolean
+    required: false
+    default: false
+    description: Run quality tool checks (eslint, pylint, etc.) if configured
+    flags: ["--quality"]
+  
+  - name: validation
+    type: string
+    required: false
+    default: "all"
+    description: Which validation scripts to run
+    choices: ["all", "structure", "naming", "frontmatter", "none"]
+    flags: ["-v", "--validation"]
+  
+  - name: update-templates
+    type: boolean
+    required: false
+    default: false
+    description: Check for newer template versions and prompt to update
+    flags: ["--update-templates"]
+  
+  - name: fix
+    type: boolean
+    required: false
+    default: false
+    description: Attempt automatic fixes for detected issues
+    flags: ["--fix"]
+  
+  - name: verbose
+    type: boolean
+    required: false
+    default: false
+    description: Show detailed output including all validation messages
+    flags: ["--verbose"]
+  
+  - name: format
+    type: string
+    required: false
+    default: "text"
+    description: Output format for validation results
+    choices: ["text", "json", "yaml"]
+    flags: ["--format"]
+
+behavior:
+  preconditions:
+    - .specify/ directory must exist (run init first)
+    - target_path must exist and be readable
+    - If --quality set, quality tools must be configured in .specify/config.yaml
+  
+  execution_steps:
+    - step: 1
+      action: Validate arguments and load configuration
+      source: .specify/config.yaml
+      error_handling: Exit with code 1 if .specify/ not found
+    
+    - step: 2
+      action: Detect target type
+      conditions:
+        - if_file: Validate single artifact
+        - if_directory: Validate all artifacts in directory
+        - if_project_root: Check entire project structure
+    
+    - step: 3
+      action: Run structure validation
+      script_unix: .specify/scripts/bash/validate-structure.sh
+      script_windows: .specify/scripts/powershell/validate-structure.ps1
+      skip_if: --validation=none or --validation != all,structure
+      checks:
+        - .specify/ directory structure correct
+        - specs/ directory exists
+        - Artifact folders follow naming convention {id}-{slug}
+        - Required files present (spec.md, plan.md, etc.)
+    
+    - step: 4
+      action: Run naming validation
+      script_unix: .specify/scripts/bash/validate-naming.sh
+      script_windows: .specify/scripts/powershell/validate-naming.ps1
+      skip_if: --validation=none or --validation != all,naming
+      checks:
+        - Feature IDs are 3-digit zero-padded integers
+        - Feature slugs match pattern [a-z0-9-]+
+        - File names follow conventions (spec.md, plan.md, tasks.md)
+        - No spaces or special characters in paths
+    
+    - step: 5
+      action: Run frontmatter validation
+      script_unix: .specify/scripts/bash/validate-frontmatter.sh
+      script_windows: .specify/scripts/powershell/validate-frontmatter.ps1
+      skip_if: --validation=none or --validation != all,frontmatter
+      checks:
+        - YAML frontmatter present in all artifacts
+        - Required fields exist: feature_id, created, status
+        - Parent references resolve correctly
+        - Date format is valid ISO 8601
+        - Status values are from allowed enum
+    
+    - step: 6
+      action: Aggregate validation results
+      format: List of ValidationMessage objects
+      categorize:
+        - errors: Must be addressed
+        - warnings: Should be reviewed
+        - info: Informational only
+    
+    - step: 7
+      action: Run quality tool checks (if --quality)
+      detection: Detect project type and available tools
+      tools:
+        javascript:
+          - command: npm run lint
+            fallback: npx eslint .
+          - command: npx prettier --check .
+        python:
+          - command: pylint src/
+            fallback: flake8 src/
+          - command: mypy src/
+        java:
+          - command: mvn checkstyle:check
+          - command: mvn spotbugs:check
+      error_handling: Capture tool output, do not fail on errors
+      skip_if: --quality not set
+    
+    - step: 8
+      action: Check for template updates (if --update-templates)
+      process:
+        - Read .specify/.version file
+        - Query GitHub Releases API for latest version
+        - Compare versions (semver)
+        - Prompt user if newer version available
+      skip_if: --update-templates not set
+    
+    - step: 9
+      action: Apply automatic fixes (if --fix)
+      fixes:
+        - Reformat YAML frontmatter
+        - Fix file permissions on validation scripts
+        - Renumber tasks to close gaps
+        - Normalize line endings (CRLF → LF)
+      skip_if: --fix not set
+      safety: Only apply safe, non-destructive fixes
+    
+    - step: 10
+      action: Format and output results
+      formats:
+        text: Human-readable summary with color-coded messages
+        json: Structured JSON for programmatic consumption
+        yaml: YAML format for configuration-like output
+      include:
+        - Total checks run
+        - Errors, warnings, info counts
+        - Specific messages with file/line references
+        - Suggestions for fixes
+
+  postconditions:
+    - All validation results reported to user
+    - Exit code reflects validation outcome (0 for pass, 1 for errors)
+    - If --fix applied, modified files saved
+
+output:
+  success:
+    exit_code: 0
+    stdout_text: |
+      ✓ Structure validation: PASS
+      ✓ Naming conventions: PASS
+      ✓ Frontmatter metadata: PASS
+      
+      Summary:
+        Checks run: 15
+        Errors: 0
+        Warnings: 0
+        Info: 3
+    
+    stdout_json: |
+      {
+        "status": "pass",
+        "checks_run": 15,
+        "errors": 0,
+        "warnings": 0,
+        "info": 3,
+        "messages": [
+          {"level": "INFO", "message": "Structure validation passed"},
+          {"level": "INFO", "message": "Naming conventions validated"},
+          {"level": "INFO", "message": "Frontmatter metadata correct"}
+        ]
+      }
+    
+    stdout_yaml: |
+      status: pass
+      checks_run: 15
+      errors: 0
+      warnings: 0
+      info: 3
+      messages:
+        - level: INFO
+          message: Structure validation passed
+        - level: INFO
+          message: Naming conventions validated
+        - level: INFO
+          message: Frontmatter metadata correct
+  
+  warnings:
+    exit_code: 0
+    stdout_text: |
+      ✓ Structure validation: PASS
+      ✓ Naming conventions: PASS
+      ⚠ Frontmatter metadata: WARNINGS
+      
+      Warnings:
+        - specs/003-based-on-the/plan.md:5 - Missing optional field: version
+        - specs/002-another/tasks.md:12 - Task numbering gap: T001, T003
+      
+      Summary:
+        Checks run: 15
+        Errors: 0
+        Warnings: 2
+        Info: 3
+      
+      Run with --fix to attempt automatic repairs.
+  
+  errors:
+    exit_code: 1
+    stdout_text: |
+      ✗ Structure validation: FAIL
+      ✓ Naming conventions: PASS
+      ⚠ Frontmatter metadata: WARNINGS
+      
+      Errors:
+        - specs/004-feature/ - Missing required file: spec.md
+        - specs/004-feature/plan.md - Frontmatter missing required field: feature_id
+      
+      Warnings:
+        - specs/003-based-on-the/plan.md:5 - Missing optional field: version
+      
+      Summary:
+        Checks run: 15
+        Errors: 2
+        Warnings: 1
+        Info: 3
+  
+  error_cases:
+    - condition: .specify/ directory not found
+      exit_code: 1
+      stderr: |
+        Error: .specify/ directory not found
+        Run 'specify init' to initialize project
+    
+    - condition: target_path does not exist
+      exit_code: 1
+      stderr: |
+        Error: Target path '{path}' not found
+    
+    - condition: Validation script execution fails
+      exit_code: 1
+      stderr: |
+        Error: Validation script failed: {script_name}
+        {error_details}
+    
+    - condition: Quality tool not found
+      exit_code: 0
+      stderr: |
+        Warning: Quality tool '{tool}' not found
+        Skipping quality checks
+    
+    - condition: Invalid --format option
+      exit_code: 1
+      stderr: |
+        Error: Invalid format '{format}'
+        Allowed: text, json, yaml
+
+performance:
+  target_execution_time: <1s
+  constraints:
+    - Validation scripts should execute in parallel where possible
+    - Quality tool execution may take longer (depends on project size)
+    - Template update check requires network (timeout 5s)
+  
+  optimization:
+    - Cache validation results for unchanged files
+    - Run validation scripts in parallel (structure, naming, frontmatter)
+    - Skip quality checks by default (opt-in with --quality)
+
+testing:
+  contract_tests:
+    - test_check_valid_project:
+        given: Valid project structure
+        when: specify check
+        then: All checks pass with code 0
+        assert:
+          - Exit code 0
+          - No errors reported
+    
+    - test_check_with_errors:
+        given: Project with missing required files
+        when: specify check
+        then: Errors reported with code 1
+        assert:
+          - Exit code 1
+          - Specific errors listed
+    
+    - test_check_with_warnings:
+        given: Project with minor issues
+        when: specify check
+        then: Warnings reported with code 0
+        assert:
+          - Exit code 0
+          - Warnings listed
+    
+    - test_check_single_artifact:
+        given: Valid single artifact file
+        when: specify check specs/003-based-on-the/spec.md
+        then: File validated successfully
+        assert:
+          - Only specified file checked
+          - Exit code 0
+    
+    - test_check_quality:
+        given: Project with eslint configured
+        when: specify check --quality
+        then: ESLint runs and reports results
+        assert:
+          - ESLint output captured
+          - Results included in summary
+    
+    - test_check_json_output:
+        given: Valid project
+        when: specify check --format json
+        then: JSON-formatted results output
+        assert:
+          - Valid JSON structure
+          - All messages included
+    
+    - test_check_update_templates:
+        given: Newer template version available
+        when: specify check --update-templates
+        then: Update prompt displayed
+        assert:
+          - Current and latest versions shown
+          - User prompted to update
+    
+    - test_check_fix:
+        given: Project with fixable issues
+        when: specify check --fix
+        then: Automatic fixes applied
+        assert:
+          - Fixed issues no longer reported
+          - Changes saved to files
+    
+    - test_check_no_specify:
+        given: Directory without .specify/
+        when: specify check
+        then: Error with code 1
+        assert:
+          - Error message about missing .specify/
+          - Suggestion to run init
+
+dependencies:
+  external:
+    - Validation scripts (.specify/scripts/)
+    - Quality tools (optional, if --quality)
+    - GitHub API (optional, if --update-templates)
+  
+  internal:
+    - validators module
+    - config reader module
+    - script executor module
+
+backward_compatibility:
+  - Must work with v1.x artifact structures
+  - Must detect and report v1.x vs v2.x template differences
+  - Must not modify files unless --fix specified
+
+security:
+  - Do not execute arbitrary scripts (only trusted validation scripts)
+  - Validate paths to prevent directory traversal
+  - Sanitize output when displaying file contents
+  - Respect file permissions (no modifications without --fix)
+
+compliance:
+  - FR-001: CLI provides check command ✓
+  - FR-002: Integrates validation scripts ✓
+  - FR-031: Validation scripts provide non-blocking warnings ✓
+  - FR-034-037: Quality tool integration as specified ✓
+  - FR-045: Actionable guidance with user override ✓
+  - Performance: <1s validation checks (per spec requirements) ✓

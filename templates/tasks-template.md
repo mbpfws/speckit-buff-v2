@@ -1,7 +1,57 @@
+---
+feature_id: "XXX"
+parent_spec: "specs/XXX-feature-name/spec.md"
+status: "draft"
+created: "YYYY-MM-DD"
+version: "2.0"
+tasks:
+  - id: "T001"
+    title: "Task description"
+    files_affected:
+      - "path/to/file1.ts"
+      - "path/to/file2.ts"
+    test_required: true
+    test_types:
+      - "e2e: Complete user flow"
+      - "integration: Service layer with database"
+      - "unit: Business logic validation"
+    dependencies: []
+    parallel: false
+    status: "pending"
+---
+
 # Tasks: [FEATURE NAME]
 
-**Input**: Design documents from `/specs/[###-feature-name]/`
+**Input**: Design documents from `specs/[###-feature-name]/`  
 **Prerequisites**: plan.md (required), research.md, data-model.md, contracts/
+
+<!-- 
+AGENT GUIDANCE (v2.0):
+Generate ordered, dependency-aware tasks from design artifacts.
+Mark [P] for parallel execution (different files, no dependencies).
+Follow TDD: Tests before implementation.
+
+YAML FRONTMATTER SCHEMA:
+- feature_id: string (matches spec.md)
+- parent_spec: string (path to spec.md)
+- status: enum (draft, in-progress, complete)
+- tasks: array of:
+  - id: string (T### format)
+  - title: string (brief description)
+  - files_affected: array of paths (for sync-tasks.sh validation)
+  - test_required: boolean (true if needs tests per testing-strategy.md)
+  - test_types: array of strings (e2e/integration/unit descriptions)
+  - dependencies: array of task IDs (for build-task-graph.sh)
+  - parallel: boolean (true if can run with other tasks)
+  - status: enum (pending, in-progress, completed)
+
+VALIDATION:
+- All task IDs must be unique and follow T### pattern
+- files_affected paths must be absolute or relative to repo root
+- dependencies must reference existing task IDs
+- No circular dependencies (validated by build-task-graph.sh)
+- In-code comments must match: // TASK-XXX: [description]
+-->
 
 ## Execution Flow (main)
 ```

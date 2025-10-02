@@ -1,9 +1,21 @@
+---
+feature_id: "XXX"
+title: "Feature Name"
+status: "draft"
+created: "YYYY-MM-DD"
+version: "1.0"
+---
+
 # Feature Specification: [FEATURE NAME]
 
-**Feature Branch**: `[###-feature-name]`  
-**Created**: [DATE]  
-**Status**: Draft  
-**Input**: User description: "$ARGUMENTS"
+<!-- 
+AGENT GUIDANCE:
+- This template guides you through creating a complete feature specification
+- Focus on WHAT and WHY, not HOW
+- Mark ambiguities with [NEEDS CLARIFICATION: question]
+- Remove irrelevant sections entirely
+- Ensure all requirements are testable
+-->
 
 ## Execution Flow (main)
 ```
@@ -11,25 +23,18 @@
    → If empty: ERROR "No feature description provided"
 2. Extract key concepts from description
    → Identify: actors, actions, data, constraints
-3. Validate against constitution principles:
-   → Cross-Platform: Ensure requirements work across all 10 platforms
-   → Multi-Installation: Requirements must not assume installation method
-   → Template-Driven: Must follow established template patterns
-4. For each unclear aspect:
+3. For each unclear aspect:
    → Mark with [NEEDS CLARIFICATION: specific question]
-5. Fill User Scenarios & Testing section
+4. Fill User Scenarios & Testing section
    → If no clear user flow: ERROR "Cannot determine user scenarios"
-   → Include cross-platform validation scenarios
-6. Generate Functional Requirements
-   → Each requirement must be testable across all platforms
+5. Generate Functional Requirements
+   → Each requirement must be testable
    → Mark ambiguous requirements
-   → Validate against template-driven consistency
-7. Identify Key Entities (if data involved)
-8. Run Review Checklist
+6. Identify Key Entities (if data involved)
+7. Run Review Checklist
    → If any [NEEDS CLARIFICATION]: WARN "Spec has uncertainties"
    → If implementation details found: ERROR "Remove tech details"
-   → Validate constitutional alignment
-9. Return: SUCCESS (spec ready for planning)
+8. Return: SUCCESS (spec ready for planning)
 ```
 
 ---
@@ -44,34 +49,18 @@
 - **Optional sections**: Include only when relevant to the feature
 - When a section doesn't apply, remove it entirely (don't leave as "N/A")
 
-### Cross-Platform Validation
-- All requirements MUST work across all 10 supported platforms
-- Requirements MUST NOT specify platform-specific implementation details
-- User scenarios MUST account for different agent execution patterns
-- Acceptance criteria MUST be verifiable on all platforms
-
-### Template-Driven Consistency
-- Specifications MUST follow established template structure
-- Requirements MUST use standardized phrasing and formatting
-- All specifications MUST be consumable by all AI agents
-- Changes MUST propagate to dependent artifacts automatically
-
 ### For AI Generation
 When creating this spec from a user prompt:
 1. **Mark all ambiguities**: Use [NEEDS CLARIFICATION: specific question] for any assumption you'd need to make
 2. **Don't guess**: If the prompt doesn't specify something (e.g., "login system" without auth method), mark it
 3. **Think like a tester**: Every vague requirement should fail the "testable and unambiguous" checklist item
-4. **Consider cross-platform implications**: Ensure requirements work on all 10 AI coding platforms
-5. **Validate template consistency**: Follow established patterns and structure
-6. **Common underspecified areas**:
+4. **Common underspecified areas**:
    - User types and permissions
-   - Data retention/deletion policies
+   - Data retention/deletion policies  
    - Performance targets and scale
    - Error handling behaviors
    - Integration requirements
    - Security/compliance needs
-   - Cross-platform compatibility requirements
-   - Multi-installation support considerations
 
 ---
 
@@ -87,9 +76,6 @@ When creating this spec from a user prompt:
 ### Edge Cases
 - What happens when [boundary condition]?
 - How does system handle [error scenario]?
-- How does feature behave across different AI platforms?
-- What are the implications for different installation methods?
-- How does the feature handle synchronization across platforms?
 
 ## Requirements *(mandatory)*
 
@@ -121,14 +107,10 @@ When creating this spec from a user prompt:
 
 ### Requirement Completeness
 - [ ] No [NEEDS CLARIFICATION] markers remain
-- [ ] Requirements are testable and unambiguous
+- [ ] Requirements are testable and unambiguous  
 - [ ] Success criteria are measurable
 - [ ] Scope is clearly bounded
 - [ ] Dependencies and assumptions identified
-- [ ] Cross-platform compatibility validated
-- [ ] Multi-installation support considered
-- [ ] Template-driven consistency maintained
-- [ ] Architecture-first principles followed
 
 ---
 
@@ -138,12 +120,9 @@ When creating this spec from a user prompt:
 - [ ] User description parsed
 - [ ] Key concepts extracted
 - [ ] Ambiguities marked
-- [ ] Cross-platform validation completed
-- [ ] Template consistency verified
 - [ ] User scenarios defined
 - [ ] Requirements generated
 - [ ] Entities identified
 - [ ] Review checklist passed
-- [ ] Constitution alignment validated
 
 ---

@@ -1,8 +1,15 @@
 ---
 description: Generate an actionable, dependency-ordered tasks.md for the feature based on available design artifacts.
+yaml_metadata_support: true  # NEW in v2.0: Generates YAML frontmatter
 scripts:
   sh: scripts/bash/check-prerequisites.sh --json
   ps: scripts/powershell/check-prerequisites.ps1 -Json
+  build_graph: scripts/bash/build-task-graph.sh --json  # NEW in v2.0: Detect circular dependencies
+orchestration:
+  pre_conditions: ["plan_complete"]
+  auto_trigger: ["generate-yaml-metadata"]  # NEW in v2.0
+  post_conditions: ["tasks_generated", "dependencies_validated"]  # NEW: dependencies_validated
+  next: "implement"
 ---
 
 The user input to you can be provided directly by the agent or as a command argument - you **MUST** consider it before proceeding with the prompt (if not empty).
@@ -25,7 +32,7 @@ $ARGUMENTS
    - Generate tasks based on what's available
 
 3. Generate tasks following the template:
-   - Use `/templates/tasks-template.md` as the base
+   - Use `.specify/templates/tasks-template.md` as the base
    - Replace example tasks with actual tasks based on:
      * **Setup tasks**: Project init, dependencies, linting
      * **Test tasks [P]**: One per contract, one per integration scenario
