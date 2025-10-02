@@ -95,7 +95,11 @@ uv tool install specify-cli --from git+https://github.com/mbpfws/speckit-buff-v2
 
 **One-time Usage**:
 ```bash
-uvx --from git+https://github.com/mbpfws/speckit-buff-v2.git specify-cli init my-project --ai roo
+# Note: Package is 'specify-cli' but executable is 'specify'
+uvx --from git+https://github.com/mbpfws/speckit-buff-v2.git specify init my-project --ai roo
+
+# Or in current directory
+uvx --from git+https://github.com/mbpfws/speckit-buff-v2.git specify init --here --ai roo
 ```
 
 ### 2. Initialize Your Project
