@@ -1,30 +1,32 @@
 <div align="center">
     <img src="./media/logo_small.webp"/>
-    <h1>🌱 Spec Kit v2.0</h1>
-    <h3><em>Simple, Template-Driven Specifications for AI Agents</em></h3>
+    <h1>🌱 Spec-Kit Enhanced Fork v2.0</h1>
+    <h3><em>Enhanced Spec-Driven Development with Brownfield Intelligence & Agent Self-Regulation</em></h3>
 </div>
 
 <p align="center">
-    <strong>A minimalist framework that empowers AI agents with high-quality templates and validation scripts—no complex analysis engines required.</strong>
+    <strong>An enhanced fork of GitHub's Spec-Kit with brownfield analysis, agent self-regulation, complexity tiers, and intelligent orchestration—100% backward compatible.</strong>
 </p>
 
-[![Release](https://github.com/github/spec-kit/actions/workflows/release.yml/badge.svg)](https://github.com/github/spec-kit/actions/workflows/release.yml)
+[![Release](https://github.com/mbpfws/speckit-buff-v2/actions/workflows/release.yml/badge.svg)](https://github.com/mbpfws/speckit-buff-v2/actions/workflows/release.yml)
+[![Original](https://img.shields.io/badge/based%20on-github%2Fspec--kit-blue)](https://github.com/github/spec-kit)
 
 ---
 
 ## Table of Contents
 
-- [🤔 What is Spec-Kit v2.0?](#-what-is-spec-kit-v20)
-- [✨ What's New in v2.0](#-whats-new-in-v20)
+- [🤔 What is Spec-Kit Enhanced Fork?](#-what-is-spec-kit-enhanced-fork)
+- [✨ What's New in Enhanced Fork v2.0](#-whats-new-in-enhanced-fork-v20)
 - [⚡ Quick Start](#-quick-start)
 - [🤖 Supported AI Platforms](#-supported-ai-platforms)
 - [🔧 CLI Reference](#-cli-reference)
 - [📚 Core Philosophy](#-core-philosophy)
-- [🔍 Migration from v1.x](#-migration-from-v1x)
+- [🔍 Migration from Original Spec-Kit](#-migration-from-original-spec-kit)
 - [🔧 Prerequisites](#-prerequisites)
 - [🔍 Troubleshooting](#-troubleshooting)
 - [👥 Maintainers](#-maintainers)
 - [💬 Support](#-support)
+- [🙏 Acknowledgements](#-acknowledgements)
 - [📄 License](#-license)
 
 ## 🤔 What is Spec-Kit v2.0?
