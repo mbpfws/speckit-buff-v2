@@ -29,37 +29,60 @@
 - [🙏 Acknowledgements](#-acknowledgements)
 - [📄 License](#-license)
 
-## 🤔 What is Spec-Kit v2.0?
+## 🤔 What is Spec-Kit Enhanced Fork?
 
-Spec-Kit v2.0 is a **back-to-basics** realignment of the specification framework, designed to be:
+Spec-Kit Enhanced Fork v2.0 is an **enhanced version** of GitHub's Spec-Kit with powerful new features while maintaining 100% backward compatibility:
 
-- **🎯 Simple**: CLI under 400 lines, only `init` and `check` commands
-- **📝 Template-Driven**: High-quality markdown templates with embedded agent guidance
-- **🤖 Agent-Native**: Leverages AI capabilities for analysis and research, not complex engines
-- **🌐 Cross-Platform**: Works on all 10 major AI coding platforms
-- **⚡ Lightweight**: Minimal dependencies (stdlib, requests, PyYAML, click)
+- **🎯 Simple**: CLI under 400 lines, `init` and enhanced `check` commands
+- **📝 Template-Driven**: Enhanced templates with complexity tiers and brownfield analysis
+- **🤖 Agent-Native**: Leverages AI capabilities with self-regulation and citation requirements
+- **🌐 Cross-Platform**: Works on all 11 major AI coding platforms
+- **⚡ Lightweight**: Minimal dependencies (typer, rich, httpx)
+- **🔍 Brownfield Intelligence**: 4-pass analysis workflow for existing codebases
+- **🎓 Complexity Tiers**: Novice/Intermediate/Expert template sections
+- **🔗 Intelligent Orchestration**: Auto-workflow chaining and context management
 
-## ✨ What's New in v2.0
+## ✨ What's New in Enhanced Fork v2.0
 
-### Simplified Architecture
-- **Removed**: Complex analysis engines, deep brownfield scanners, pattern detectors
-- **Added**: Agent-augmented templates with embedded research guidance
-- **Result**: <400 LOC CLI that does more with less
+### 🆕 Brownfield Intelligence
+- **4-Pass Analysis Workflow**: Document → Analyze → Integrate → Risk assessment
+- **Tech Stack Detection**: Automatic detection for JS/TS, Python, Java, Ruby, Go, Rust
+- **Confidence Levels**: High/Med/Low confidence reporting for all findings
+- **Integration Strategy**: Templates for migrating existing codebases
 
-### Template-First Approach
-- **Brownfield Analysis**: Multi-pass agent checklists instead of automated scanners
-- **Architecture Guidance**: Framework patterns with online research instructions
-- **Quality Checks**: Non-blocking validation scripts, not blocking linters
+### 🎓 Complexity Tier System
+- **Novice/Intermediate/Expert**: Templates adapt to user skill level
+- **Conditional Sections**: `<!-- IF tier=X -->` syntax for targeted guidance
+- **Tier-Based Scaffolding**: Generate appropriate boilerplate for skill level
 
-### Enhanced Cross-Platform Support
-- **10 AI Platforms**: Claude Code, Roo Code, GitHub Copilot, Cursor, Gemini CLI, Qwen Code, opencode, Windsurf, Kilo Code, Auggie CLI
+### 🤖 Agent Self-Regulation
+- **User Confirmation Loops**: CRITICAL/MAJOR/MINOR severity thresholds
+- **Citation Requirements**: "According to [URL]" format for all research
+- **"I Don't Know" Protocol**: Prefer research over guessing
+- **No Auto-Fix**: Agents must get permission before corrections
+
+### 🔗 Intelligent Orchestration
+- **Auto-Workflow Chaining**: Workflows trigger other workflows based on conditions
+- **Context Management**: `.specify/context.json` stores workflow state
+- **Complexity-Driven Research**: Multi-stage research for complex features
+- **Domain Detection**: Automatic identification of multi-domain features
+
+### ✅ Enhanced Check Command
+- **`--tags`**: Validate code tags (TODO/FIXME/TASK-XXX)
+- **`--dependencies`**: Check for vulnerabilities (npm audit, pip check)
+- **`--tasks`**: Sync YAML ↔ code tags ↔ git
+- **`--all`**: Run all checks at once
+
+### 📦 26 New Scripts
+- **3 Functional**: analyze-codebase, sync-tasks, enhanced check-prerequisites
+- **23 Structured Stubs**: Ready for implementation with clear patterns
+- **Cross-Platform**: All bash + PowerShell pairs
+
+### 🌐 Enhanced Cross-Platform Support
+- **11 AI Platforms**: Claude Code, Roo Code, GitHub Copilot, Cursor, Gemini CLI, Qwen Code, opencode, Windsurf, Kilo Code, Auggie CLI, Codex CLI
+- **4 MVP Platforms**: Full support for Claude, Windsurf, Roo, Cursor
 - **2 Installation Methods**: Both `uv tool` (persistent) and `uvx` (one-time) supported
 - **Dual Scripts**: Bash (Unix/Linux/macOS) and PowerShell (Windows) validation scripts
-
-### Agent-Native Philosophy
-- Agents perform analysis using templates and internet research
-- Agents run validation scripts and report findings
-- Users make final decisions (non-blocking validation)
 
 ## ⚡ Quick Start
 
@@ -67,12 +90,12 @@ Spec-Kit v2.0 is a **back-to-basics** realignment of the specification framework
 
 **Persistent Installation** (recommended):
 ```bash
-uv tool install specify-cli
+uv tool install specify-cli --from git+https://github.com/mbpfws/speckit-buff-v2.git
 ```
 
 **One-time Usage**:
 ```bash
-uvx specify-cli init
+uvx --from git+https://github.com/mbpfws/speckit-buff-v2.git specify-cli init my-project --ai roo
 ```
 
 ### 2. Initialize Your Project
@@ -95,27 +118,33 @@ This creates:
 Your AI agent now has access to high-quality templates:
 
 ```bash
-# Use agent commands (available in Claude Code, Windsurf, etc.)
-/constitution  # Establish project principles
-/specify       # Create feature specification
-/clarify       # Clarify underspecified areas
-/plan          # Generate technical implementation plan
-/tasks         # Break down into actionable tasks
-/analyze       # Verify consistency before implementation
-/implement     # Execute all tasks
+# Use agent commands (available in Claude Code, Windsurf, Roo Code, etc.)
+/constitution         # Establish project principles
+/specify              # Create feature specification (with tier detection)
+/clarify              # Clarify underspecified areas
+/plan                 # Generate technical implementation plan (with architecture research)
+/tasks                # Break down into actionable tasks (with YAML metadata)
+/analyze              # Verify consistency before implementation
+/analyze-brownfield   # Analyze existing codebase (NEW)
+/validate-governance  # Check tags and metadata (NEW)
+/migrate-platform     # Move between AI platforms (NEW)
+/implement            # Execute all tasks
 ```
 
 ### 4. Validate Your Work
 
 ```bash
 # Run validation checks
-specify check
+specify check --all
 
-# With quality tool integration
-specify check --quality
+# Validate code tags
+specify check --tags
 
-# Check for template updates
-specify check --update-templates
+# Check dependencies for vulnerabilities
+specify check --dependencies
+
+# Sync task tracking
+specify check --tasks
 ```
 
 For complete workflows, see the [quickstart scenarios](./specs/003-based-on-the/quickstart.md).
@@ -231,54 +260,50 @@ After running `specify init`, your AI coding agent will have access to these sla
 
 ## 📚 Core Philosophy
 
-Spec-Kit v2.0 follows seven constitutional principles:
+Spec-Kit Enhanced Fork follows fourteen constitutional principles:
 
-### 1. **Cross-Platform Compatibility**
-Support all 10 major AI coding platforms with consistent behavior across Windows, macOS, and Linux.
+### Original Principles (I-VII)
+1. **Cross-Platform Compatibility**: Support all 11 AI platforms across Windows, macOS, Linux
+2. **Multi-Installation Support**: Work with both `uv tool` and `uvx` methods
+3. **Template-Driven Consistency**: High-quality markdown templates as foundation
+4. **Agent-Native Execution**: AI agents as primary actors, system augments
+5. **Simplicity Principle**: CLI <400 LOC, minimal dependencies
+6. **Governance Balance**: Non-blocking validation, user autonomy
+7. **Backward Compatibility**: 100% compatible with original spec-kit
 
-### 2. **Multi-Installation Support**
-Work seamlessly with both persistent (`uv tool`) and one-time (`uvx`) installation methods.
+### Enhanced Principles (VIII-XIV)
+8. **Intelligent Workflow Chaining**: Auto-triggers and conditional workflow execution
+9. **Complexity-Driven Research**: Multi-stage research for complex features
+10. **Context-Aware Execution**: Persistent workflow state in `.specify/context.json`
+11. **Domain-Driven Architecture**: Research-driven architectural decisions
+12. **Agent Self-Regulation**: User confirmation loops, citation requirements, severity thresholds
+13. **Brownfield Support**: 4-pass analysis, confidence levels, file history tracking
+14. **Context Management**: Section indexes, extraction tools, hierarchical navigation
 
-### 3. **Template-Driven Consistency**
-High-quality markdown templates as the core system—agents fill templates, not write from scratch.
+See [memory/constitution.md](./memory/constitution.md) for complete details.
 
-### 4. **Agent-Native Execution**
-AI agents remain the primary actors. The system augments capabilities, never replaces agent intelligence.
+## 🔍 Migration from Original Spec-Kit
 
-### 5. **Simplicity Principle**
-Minimal tooling overhead:
-- CLI <400 lines of code
-- Only 4 dependencies (stdlib, requests, PyYAML, click)
-- Zero analysis engines
-
-### 6. **Governance Balance**
-Non-blocking validation that preserves user autonomy:
-- Scripts provide warnings, not errors
-- Agents report findings to users
-- Users make final decisions
-
-### 7. **Backward Compatibility**
-Existing v1.x projects work without modification. Clear migration path provided.
-
-## 🔍 Migration from v1.x
-
-### What Changed
-- **Removed**: Complex analysis engines, automated brownfield scanners
-- **Simplified**: CLI to only `init` and `check` commands
-- **Enhanced**: Templates with agent-augmented guidance
-- **Added**: Cross-platform validation scripts (bash + PowerShell)
+### What's Different
+- **Enhanced**: Brownfield analysis, complexity tiers, agent self-regulation
+- **Added**: 26 new scripts (3 functional + 23 stubs)
+- **Extended**: 3 new constitutional principles (XII, XIII, XIV)
+- **Improved**: Enhanced `check` command with --tags, --dependencies, --tasks
+- **Repository**: Downloads from `mbpfws/speckit-buff-v2` instead of `github/spec-kit`
 
 ### Migration Steps
-1. Install v2.0: `uv tool install specify-cli@2.0.0`
-2. Run in existing project: `specify check`
-3. Review migration suggestions: `specify check --migrate`
-4. Update `.specify/` when ready (your specs stay unchanged)
+1. Install enhanced fork: `uv tool install specify-cli --from git+https://github.com/mbpfws/speckit-buff-v2.git`
+2. Run in existing project: `specify check --all`
+3. Explore new features: `/analyze-brownfield`, `/validate-governance`
+4. All your existing specs work unchanged!
 
 ### Compatibility
-✅ V1.x artifacts validate successfully  
-✅ V1.x frontmatter format unchanged  
-✅ V1.x folder structure supported  
-⚠️ New validation scripts recommended (optional)
+✅ 100% backward compatible with original spec-kit  
+✅ All original commands work identically  
+✅ All original arguments and options preserved  
+✅ Only repo URL changed  
+✅ Enhanced features are optional and additive  
+✅ No breaking changes
 
 ## 🔧 Prerequisites
 
@@ -580,16 +605,32 @@ rm gcm-linux_amd64.2.6.1.deb
 
 ## 👥 Maintainers
 
+**Enhanced Fork**:
+- mbpfws ([@mbpfws](https://github.com/mbpfws))
+
+**Original Spec-Kit**:
 - Den Delimarsky ([@localden](https://github.com/localden))
 - John Lam ([@jflam](https://github.com/jflam))
 
 ## 💬 Support
 
-For support, please open a [GitHub issue](https://github.com/github/spec-kit/issues/new). We welcome bug reports, feature requests, and questions about using Spec-Driven Development.
+For support with the enhanced fork, please open a [GitHub issue](https://github.com/mbpfws/speckit-buff-v2/issues/new). We welcome bug reports, feature requests, and questions about using the enhanced features.
+
+For questions about the original Spec-Kit, visit the [original repository](https://github.com/github/spec-kit).
 
 ## 🙏 Acknowledgements
 
-This project is heavily influenced by and based on the work and research of [John Lam](https://github.com/jflam).
+This enhanced fork is based on [GitHub's Spec-Kit](https://github.com/github/spec-kit) by [Den Delimarsky](https://github.com/localden) and [John Lam](https://github.com/jflam).
+
+**Enhanced Features**:
+- Brownfield intelligence and 4-pass analysis workflow
+- Agent self-regulation with user confirmation loops
+- Complexity tier system (Novice/Intermediate/Expert)
+- Intelligent orchestration and context management
+- 26 new cross-platform scripts (bash + PowerShell)
+- 3 new constitutional principles
+
+**Credits**: The original Spec-Kit project is heavily influenced by the work and research of John Lam.
 
 ## 📄 License
 
